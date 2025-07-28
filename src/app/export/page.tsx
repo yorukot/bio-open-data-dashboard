@@ -124,13 +124,6 @@ export default function ExportPage() {
       <SidebarProvider>
         <AppSidebar />
         <main className="flex-1 flex flex-col overflow-hidden">
-          <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-            <div className="container flex h-14 items-center">
-              <div>
-                <h1 className="text-xl font-semibold">導出</h1>
-              </div>
-            </div>
-          </header>
           <div className="flex-1 p-6 overflow-auto">
             <div className="max-w-6xl mx-auto">
               <h2 className="text-3xl font-bold tracking-tight mb-2">
