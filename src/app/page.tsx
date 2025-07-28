@@ -1,6 +1,5 @@
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { Leaderboard } from "@/components/leaderboard";
 
 export default function Home() {
   return (
@@ -28,7 +27,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mb-8">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               <div className="rounded-lg border bg-card text-card-foreground shadow-sm p-6">
                 <h3 className="font-semibold text-lg mb-2">Data Sources</h3>
                 <p className="text-sm text-muted-foreground">
@@ -51,8 +50,6 @@ export default function Home() {
                 </p>
               </div>
             </div>
-
-            <Leaderboard />
           </div>
         </div>
         </main>

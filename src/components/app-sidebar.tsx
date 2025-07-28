@@ -30,7 +30,7 @@ const items = [
   },
   {
     title: "排行",
-    url: "#",
+    url: "/leaderboard",
     icon: Trophy,
   },
   {
