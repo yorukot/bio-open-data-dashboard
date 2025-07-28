@@ -1,11 +1,13 @@
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { Leaderboard } from "@/components/leaderboard";
 
 export default function Home() {
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <main className="flex-1 flex flex-col">
+    <div className="flex h-screen">
+      <SidebarProvider>
+        <AppSidebar />
+        <main className="flex-1 flex flex-col overflow-hidden">
         <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <div className="container flex h-14 items-center">
             <SidebarTrigger />
@@ -14,7 +16,7 @@ export default function Home() {
             </div>
           </div>
         </header>
-        <div className="flex-1 p-6">
+        <div className="flex-1 p-6 overflow-auto">
           <div className="max-w-4xl mx-auto">
             <div className="mb-8">
               <h2 className="text-3xl font-bold tracking-tight mb-2">
@@ -26,7 +28,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mb-8">
               <div className="rounded-lg border bg-card text-card-foreground shadow-sm p-6">
                 <h3 className="font-semibold text-lg mb-2">Data Sources</h3>
                 <p className="text-sm text-muted-foreground">
@@ -49,9 +51,12 @@ export default function Home() {
                 </p>
               </div>
             </div>
+
+            <Leaderboard />
           </div>
         </div>
-      </main>
-    </SidebarProvider>
+        </main>
+      </SidebarProvider>
+    </div>
   );
 }
