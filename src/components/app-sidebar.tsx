@@ -14,7 +14,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { Button } from "@/components/ui/button";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 
 const items = [
@@ -35,7 +34,7 @@ const items = [
   },
   {
     title: "導出",
-    url: "#",
+    url: "/export",
     icon: Download,
   },
 ];
