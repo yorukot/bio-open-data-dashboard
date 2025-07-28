@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { format } from "date-fns"
 import { Calendar as CalendarIcon, Download } from "lucide-react"
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -126,14 +126,13 @@ export default function ExportPage() {
         <main className="flex-1 flex flex-col overflow-hidden">
           <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="container flex h-14 items-center">
-              <SidebarTrigger />
-              <div className="ml-4">
+              <div>
                 <h1 className="text-xl font-semibold">導出</h1>
               </div>
             </div>
           </header>
           <div className="flex-1 p-6 overflow-auto">
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-6xl mx-auto">
               <h2 className="text-3xl font-bold tracking-tight mb-2">
                 資料導出
               </h2>
