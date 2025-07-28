@@ -20,133 +20,133 @@ interface LeaderboardData {
 const leaderboardData = {
   researchers: [
     {
-      title: "Most Studied Species",
+      title: "研究最多的物種",
       icon: <Trophy className="w-5 h-5 text-yellow-500" />,
       entries: [
-        { rank: 1, name: "House Mouse (Mus musculus)", value: "45,782 studies", change: 156 },
-        { rank: 2, name: "Fruit Fly (Drosophila melanogaster)", value: "38,245 studies", change: 98 },
-        { rank: 3, name: "Zebrafish (Danio rerio)", value: "32,156 studies", change: 134 },
-        { rank: 4, name: "Norway Rat (Rattus norvegicus)", value: "28,934 studies", change: 67 },
-        { rank: 5, name: "Rhesus Macaque (Macaca mulatta)", value: "24,567 studies", change: 89 },
-        { rank: 6, name: "African Clawed Frog (Xenopus laevis)", value: "19,823 studies", change: 45 },
-        { rank: 7, name: "Chimpanzee (Pan troglodytes)", value: "16,745 studies", change: 23 },
-        { rank: 8, name: "Domestic Dog (Canis familiaris)", value: "14,892 studies", change: 78 },
-        { rank: 9, name: "Domestic Cat (Felis catus)", value: "12,456 studies", change: 34 },
-        { rank: 10, name: "Pig (Sus scrofa)", value: "11,234 studies", change: 56 },
-        { rank: 11, name: "Chicken (Gallus gallus)", value: "9,876 studies", change: 43 },
-        { rank: 12, name: "Cow (Bos taurus)", value: "8,765 studies", change: 29 },
-        { rank: 13, name: "Horse (Equus caballus)", value: "7,432 studies", change: 18 },
-        { rank: 14, name: "Sheep (Ovis aries)", value: "6,543 studies", change: 25 },
-        { rank: 15, name: "Rabbit (Oryctolagus cuniculus)", value: "5,987 studies", change: 31 }
+        { rank: 1, name: "小家鼠 (Mus musculus)", value: "45,782 項研究", change: 156 },
+        { rank: 2, name: "果蠅 (Drosophila melanogaster)", value: "38,245 項研究", change: 98 },
+        { rank: 3, name: "斑馬魚 (Danio rerio)", value: "32,156 項研究", change: 134 },
+        { rank: 4, name: "挪威鼠 (Rattus norvegicus)", value: "28,934 項研究", change: 67 },
+        { rank: 5, name: "恆河猴 (Macaca mulatta)", value: "24,567 項研究", change: 89 },
+        { rank: 6, name: "非洲爪蟾 (Xenopus laevis)", value: "19,823 項研究", change: 45 },
+        { rank: 7, name: "黑猩猩 (Pan troglodytes)", value: "16,745 項研究", change: 23 },
+        { rank: 8, name: "家犬 (Canis familiaris)", value: "14,892 項研究", change: 78 },
+        { rank: 9, name: "家貓 (Felis catus)", value: "12,456 項研究", change: 34 },
+        { rank: 10, name: "豬 (Sus scrofa)", value: "11,234 項研究", change: 56 },
+        { rank: 11, name: "雞 (Gallus gallus)", value: "9,876 項研究", change: 43 },
+        { rank: 12, name: "牛 (Bos taurus)", value: "8,765 項研究", change: 29 },
+        { rank: 13, name: "馬 (Equus caballus)", value: "7,432 項研究", change: 18 },
+        { rank: 14, name: "綿羊 (Ovis aries)", value: "6,543 項研究", change: 25 },
+        { rank: 15, name: "兔 (Oryctolagus cuniculus)", value: "5,987 項研究", change: 31 }
       ]
     },
     {
-      title: "Genome Sequencing Progress",
+      title: "基因組測序進展",
       icon: <Award className="w-5 h-5 text-blue-500" />,
       entries: [
-        { rank: 1, name: "Mouse (Mus musculus)", value: "99.8% complete", change: 2 },
-        { rank: 2, name: "Rat (Rattus norvegicus)", value: "99.5% complete", change: 1 },
-        { rank: 3, name: "Zebrafish (Danio rerio)", value: "99.2% complete", change: 3 },
-        { rank: 4, name: "Fruit Fly (Drosophila melanogaster)", value: "98.9% complete", change: 0 },
-        { rank: 5, name: "Chimpanzee (Pan troglodytes)", value: "98.7% complete", change: 4 },
-        { rank: 6, name: "Dog (Canis familiaris)", value: "98.4% complete", change: 2 },
-        { rank: 7, name: "Macaque (Macaca mulatta)", value: "98.1% complete", change: 1 },
-        { rank: 8, name: "Pig (Sus scrofa)", value: "97.8% complete", change: 5 },
-        { rank: 9, name: "Cat (Felis catus)", value: "97.5% complete", change: 3 },
-        { rank: 10, name: "Chicken (Gallus gallus)", value: "97.2% complete", change: 2 },
-        { rank: 11, name: "Cow (Bos taurus)", value: "96.9% complete", change: 1 },
-        { rank: 12, name: "Frog (Xenopus laevis)", value: "96.6% complete", change: 4 },
-        { rank: 13, name: "Horse (Equus caballus)", value: "96.3% complete", change: 2 },
-        { rank: 14, name: "Sheep (Ovis aries)", value: "96.0% complete", change: 3 },
-        { rank: 15, name: "Rabbit (Oryctolagus cuniculus)", value: "95.7% complete", change: 1 }
+        { rank: 1, name: "小鼠 (Mus musculus)", value: "99.8% 完成", change: 2 },
+        { rank: 2, name: "大鼠 (Rattus norvegicus)", value: "99.5% 完成", change: 1 },
+        { rank: 3, name: "斑馬魚 (Danio rerio)", value: "99.2% 完成", change: 3 },
+        { rank: 4, name: "果蠅 (Drosophila melanogaster)", value: "98.9% 完成", change: 0 },
+        { rank: 5, name: "黑猩猩 (Pan troglodytes)", value: "98.7% 完成", change: 4 },
+        { rank: 6, name: "狗 (Canis familiaris)", value: "98.4% 完成", change: 2 },
+        { rank: 7, name: "獼猴 (Macaca mulatta)", value: "98.1% 完成", change: 1 },
+        { rank: 8, name: "豬 (Sus scrofa)", value: "97.8% 完成", change: 5 },
+        { rank: 9, name: "貓 (Felis catus)", value: "97.5% 完成", change: 3 },
+        { rank: 10, name: "雞 (Gallus gallus)", value: "97.2% 完成", change: 2 },
+        { rank: 11, name: "牛 (Bos taurus)", value: "96.9% 完成", change: 1 },
+        { rank: 12, name: "蛙 (Xenopus laevis)", value: "96.6% 完成", change: 4 },
+        { rank: 13, name: "馬 (Equus caballus)", value: "96.3% 完成", change: 2 },
+        { rank: 14, name: "綿羊 (Ovis aries)", value: "96.0% 完成", change: 3 },
+        { rank: 15, name: "兔 (Oryctolagus cuniculus)", value: "95.7% 完成", change: 1 }
       ]
     }
   ],
   institutions: [
     {
-      title: "Disease Research Models",
+      title: "疾病研究模型",
       icon: <Users className="w-5 h-5 text-green-500" />,
       entries: [
-        { rank: 1, name: "Mouse (Mus musculus)", value: "Cancer, Diabetes, Alzheimer's", change: 23 },
-        { rank: 2, name: "Rat (Rattus norvegicus)", value: "Hypertension, Neurological", change: 18 },
-        { rank: 3, name: "Zebrafish (Danio rerio)", value: "Heart Disease, Development", change: 34 },
-        { rank: 4, name: "Fruit Fly (Drosophila)", value: "Aging, Neurodegeneration", change: 12 },
-        { rank: 5, name: "Macaque (Macaca mulatta)", value: "HIV, Immunology", change: 45 },
-        { rank: 6, name: "Dog (Canis familiaris)", value: "Inherited Diseases", change: 8 },
-        { rank: 7, name: "Pig (Sus scrofa)", value: "Organ Transplantation", change: 29 },
-        { rank: 8, name: "Cat (Felis catus)", value: "Viral Infections", change: 15 },
-        { rank: 9, name: "Rabbit (Oryctolagus cuniculus)", value: "Cardiovascular", change: 7 },
-        { rank: 10, name: "Ferret (Mustela putorius)", value: "Respiratory Diseases", change: 19 },
-        { rank: 11, name: "Guinea Pig (Cavia porcellus)", value: "Tuberculosis, Allergies", change: 11 },
-        { rank: 12, name: "Chicken (Gallus gallus)", value: "Influenza, Development", change: 6 },
-        { rank: 13, name: "Sheep (Ovis aries)", value: "Prion Diseases", change: 4 },
-        { rank: 14, name: "Cow (Bos taurus)", value: "BSE, Metabolism", change: 9 },
-        { rank: 15, name: "Horse (Equus caballus)", value: "Muscle Disorders", change: 3 }
+        { rank: 1, name: "小鼠 (Mus musculus)", value: "癌症、糖尿病、阿茲海默症", change: 23 },
+        { rank: 2, name: "大鼠 (Rattus norvegicus)", value: "高血壓、神經疾病", change: 18 },
+        { rank: 3, name: "斑馬魚 (Danio rerio)", value: "心臟病、發育", change: 34 },
+        { rank: 4, name: "果蠅 (Drosophila)", value: "老化、神經退化", change: 12 },
+        { rank: 5, name: "獼猴 (Macaca mulatta)", value: "HIV、免疫學", change: 45 },
+        { rank: 6, name: "狗 (Canis familiaris)", value: "遺傳疾病", change: 8 },
+        { rank: 7, name: "豬 (Sus scrofa)", value: "器官移植", change: 29 },
+        { rank: 8, name: "貓 (Felis catus)", value: "病毒感染", change: 15 },
+        { rank: 9, name: "兔 (Oryctolagus cuniculus)", value: "心血管疾病", change: 7 },
+        { rank: 10, name: "雪貂 (Mustela putorius)", value: "呼吸道疾病", change: 19 },
+        { rank: 11, name: "天竺鼠 (Cavia porcellus)", value: "結核病、過敏", change: 11 },
+        { rank: 12, name: "雞 (Gallus gallus)", value: "流感、發育", change: 6 },
+        { rank: 13, name: "綿羊 (Ovis aries)", value: "朊蛋白疾病", change: 4 },
+        { rank: 14, name: "牛 (Bos taurus)", value: "BSE、代謝", change: 9 },
+        { rank: 15, name: "馬 (Equus caballus)", value: "肌肉疾病", change: 3 }
       ]
     },
     {
-      title: "Conservation Priority",
+      title: "保育優先級",
       icon: <TrendingUp className="w-5 h-5 text-purple-500" />,
       entries: [
-        { rank: 1, name: "Giant Panda (Ailuropoda melanoleuca)", value: "Critical", change: 5 },
-        { rank: 2, name: "Snow Leopard (Panthera uncia)", value: "Vulnerable", change: 8 },
-        { rank: 3, name: "African Elephant (Loxodonta africana)", value: "Endangered", change: -2 },
-        { rank: 4, name: "Amur Tiger (Panthera tigris altaica)", value: "Endangered", change: 12 },
-        { rank: 5, name: "Polar Bear (Ursus maritimus)", value: "Vulnerable", change: -4 },
-        { rank: 6, name: "Mountain Gorilla (Gorilla beringei)", value: "Critical", change: 15 },
-        { rank: 7, name: "Orangutan (Pongo pygmaeus)", value: "Critical", change: 7 },
-        { rank: 8, name: "Black Rhinoceros (Diceros bicornis)", value: "Critical", change: 9 },
-        { rank: 9, name: "Cheetah (Acinonyx jubatus)", value: "Vulnerable", change: 3 },
-        { rank: 10, name: "Blue Whale (Balaenoptera musculus)", value: "Endangered", change: 6 },
-        { rank: 11, name: "Vaquita (Phocoena sinus)", value: "Critical", change: -8 },
-        { rank: 12, name: "Javan Rhinoceros (Rhinoceros sondaicus)", value: "Critical", change: 2 },
-        { rank: 13, name: "Hawksbill Turtle (Eretmochelys imbricata)", value: "Critical", change: 4 },
-        { rank: 14, name: "Sumatran Elephant (Elephas maximus)", value: "Critical", change: 1 },
-        { rank: 15, name: "Cross River Gorilla (Gorilla gorilla)", value: "Critical", change: 3 }
+        { rank: 1, name: "大熊貓 (Ailuropoda melanoleuca)", value: "極危", change: 5 },
+        { rank: 2, name: "雪豹 (Panthera uncia)", value: "易危", change: 8 },
+        { rank: 3, name: "非洲象 (Loxodonta africana)", value: "瀕危", change: -2 },
+        { rank: 4, name: "東北虎 (Panthera tigris altaica)", value: "瀕危", change: 12 },
+        { rank: 5, name: "北極熊 (Ursus maritimus)", value: "易危", change: -4 },
+        { rank: 6, name: "山地大猩猩 (Gorilla beringei)", value: "極危", change: 15 },
+        { rank: 7, name: "紅毛猩猩 (Pongo pygmaeus)", value: "極危", change: 7 },
+        { rank: 8, name: "黑犀牛 (Diceros bicornis)", value: "極危", change: 9 },
+        { rank: 9, name: "獵豹 (Acinonyx jubatus)", value: "易危", change: 3 },
+        { rank: 10, name: "藍鯨 (Balaenoptera musculus)", value: "瀕危", change: 6 },
+        { rank: 11, name: "加州鼠海豚 (Phocoena sinus)", value: "極危", change: -8 },
+        { rank: 12, name: "爪哇犀牛 (Rhinoceros sondaicus)", value: "極危", change: 2 },
+        { rank: 13, name: "玳瑁 (Eretmochelys imbricata)", value: "極危", change: 4 },
+        { rank: 14, name: "蘇門答臘象 (Elephas maximus)", value: "極危", change: 1 },
+        { rank: 15, name: "克羅斯河大猩猩 (Gorilla gorilla)", value: "極危", change: 3 }
       ]
     }
   ],
   datasets: [
     {
-      title: "Genetic Diversity Index",
+      title: "遺傳多樣性指數",
       icon: <Database className="w-5 h-5 text-orange-500" />,
       entries: [
-        { rank: 1, name: "Wolf (Canis lupus)", value: "0.89 diversity", change: 12 },
-        { rank: 2, name: "Brown Bear (Ursus arctos)", value: "0.87 diversity", change: 8 },
-        { rank: 3, name: "Red Fox (Vulpes vulpes)", value: "0.85 diversity", change: 15 },
-        { rank: 4, name: "Wild Boar (Sus scrofa)", value: "0.83 diversity", change: 6 },
-        { rank: 5, name: "European Roe Deer (Capreolus capreolus)", value: "0.81 diversity", change: 9 },
-        { rank: 6, name: "Lynx (Lynx lynx)", value: "0.79 diversity", change: 4 },
-        { rank: 7, name: "Pine Marten (Martes martes)", value: "0.77 diversity", change: 11 },
-        { rank: 8, name: "Badger (Meles meles)", value: "0.75 diversity", change: 7 },
-        { rank: 9, name: "Otter (Lutra lutra)", value: "0.73 diversity", change: -2 },
-        { rank: 10, name: "Wildcat (Felis silvestris)", value: "0.71 diversity", change: 13 },
-        { rank: 11, name: "Beaver (Castor fiber)", value: "0.69 diversity", change: 5 },
-        { rank: 12, name: "Wolverine (Gulo gulo)", value: "0.67 diversity", change: 3 },
-        { rank: 13, name: "Stoat (Mustela erminea)", value: "0.65 diversity", change: 8 },
-        { rank: 14, name: "Polecat (Mustela putorius)", value: "0.63 diversity", change: 2 },
-        { rank: 15, name: "Weasel (Mustela nivalis)", value: "0.61 diversity", change: 6 }
+        { rank: 1, name: "狼 (Canis lupus)", value: "0.89 多樣性", change: 12 },
+        { rank: 2, name: "棕熊 (Ursus arctos)", value: "0.87 多樣性", change: 8 },
+        { rank: 3, name: "赤狐 (Vulpes vulpes)", value: "0.85 多樣性", change: 15 },
+        { rank: 4, name: "野豬 (Sus scrofa)", value: "0.83 多樣性", change: 6 },
+        { rank: 5, name: "歐洲狍 (Capreolus capreolus)", value: "0.81 多樣性", change: 9 },
+        { rank: 6, name: "猞猁 (Lynx lynx)", value: "0.79 多樣性", change: 4 },
+        { rank: 7, name: "松貂 (Martes martes)", value: "0.77 多樣性", change: 11 },
+        { rank: 8, name: "獾 (Meles meles)", value: "0.75 多樣性", change: 7 },
+        { rank: 9, name: "水獺 (Lutra lutra)", value: "0.73 多樣性", change: -2 },
+        { rank: 10, name: "野貓 (Felis silvestris)", value: "0.71 多樣性", change: 13 },
+        { rank: 11, name: "河狸 (Castor fiber)", value: "0.69 多樣性", change: 5 },
+        { rank: 12, name: "貂熊 (Gulo gulo)", value: "0.67 多樣性", change: 3 },
+        { rank: 13, name: "白鼬 (Mustela erminea)", value: "0.65 多樣性", change: 8 },
+        { rank: 14, name: "雞貂 (Mustela putorius)", value: "0.63 多樣性", change: 2 },
+        { rank: 15, name: "鼬 (Mustela nivalis)", value: "0.61 多樣性", change: 6 }
       ]
     },
     {
-      title: "Longevity Champions",
+      title: "長壽冠軍",
       icon: <Medal className="w-5 h-5 text-red-500" />,
       entries: [
-        { rank: 1, name: "Bowhead Whale (Balaena mysticetus)", value: "200+ years", change: 0 },
-        { rank: 2, name: "Greenland Shark (Somniosus microcephalus)", value: "400+ years", change: 0 },
-        { rank: 3, name: "Giant Tortoise (Aldabrachelys gigantea)", value: "150+ years", change: 0 },
-        { rank: 4, name: "Tuatara (Sphenodon punctatus)", value: "100+ years", change: 0 },
-        { rank: 5, name: "Koi Fish (Cyprinus carpio)", value: "80+ years", change: 0 },
-        { rank: 6, name: "African Elephant (Loxodonta africana)", value: "70+ years", change: 0 },
-        { rank: 7, name: "Macaw (Ara macao)", value: "60+ years", change: 0 },
-        { rank: 8, name: "Horse (Equus caballus)", value: "50+ years", change: 0 },
-        { rank: 9, name: "Chimpanzee (Pan troglodytes)", value: "45+ years", change: 0 },
-        { rank: 10, name: "Brown Bear (Ursus arctos)", value: "40+ years", change: 0 },
-        { rank: 11, name: "Lion (Panthera leo)", value: "35+ years", change: 0 },
-        { rank: 12, name: "Dog (Canis familiaris)", value: "20+ years", change: 0 },
-        { rank: 13, name: "Cat (Felis catus)", value: "18+ years", change: 0 },
-        { rank: 14, name: "Rabbit (Oryctolagus cuniculus)", value: "12+ years", change: 0 },
-        { rank: 15, name: "Mouse (Mus musculus)", value: "3+ years", change: 0 }
+        { rank: 1, name: "弓頭鯨 (Balaena mysticetus)", value: "200+ 年", change: 0 },
+        { rank: 2, name: "格陵蘭鯊 (Somniosus microcephalus)", value: "400+ 年", change: 0 },
+        { rank: 3, name: "巨龜 (Aldabrachelys gigantea)", value: "150+ 年", change: 0 },
+        { rank: 4, name: "楔齒蜥 (Sphenodon punctatus)", value: "100+ 年", change: 0 },
+        { rank: 5, name: "錦鯉 (Cyprinus carpio)", value: "80+ 年", change: 0 },
+        { rank: 6, name: "非洲象 (Loxodonta africana)", value: "70+ 年", change: 0 },
+        { rank: 7, name: "金剛鸚鵡 (Ara macao)", value: "60+ 年", change: 0 },
+        { rank: 8, name: "馬 (Equus caballus)", value: "50+ 年", change: 0 },
+        { rank: 9, name: "黑猩猩 (Pan troglodytes)", value: "45+ 年", change: 0 },
+        { rank: 10, name: "棕熊 (Ursus arctos)", value: "40+ 年", change: 0 },
+        { rank: 11, name: "獅子 (Panthera leo)", value: "35+ 年", change: 0 },
+        { rank: 12, name: "狗 (Canis familiaris)", value: "20+ 年", change: 0 },
+        { rank: 13, name: "貓 (Felis catus)", value: "18+ 年", change: 0 },
+        { rank: 14, name: "兔 (Oryctolagus cuniculus)", value: "12+ 年", change: 0 },
+        { rank: 15, name: "小鼠 (Mus musculus)", value: "3+ 年", change: 0 }
       ]
     }
   ]
@@ -199,18 +199,18 @@ export default function LeaderboardPage() {
             <div className="max-w-6xl mx-auto">
               {/* Header Section */}
               <div className="mb-6">
-                <h2 className="text-3xl font-bold tracking-tight mb-2">Leaderboards</h2>
+                <h2 className="text-3xl font-bold tracking-tight mb-2">排行榜</h2>
                 <p className="text-muted-foreground">
-                  Track top performers across researchers, institutions, and datasets
+                  追蹤研究人員、機構和數據集的頂尖表現者
                 </p>
               </div>
               
               {/* Tabs Section */}
               <Tabs defaultValue="researchers" className="w-full">
                 <TabsList className="grid w-full grid-cols-3">
-                  <TabsTrigger value="researchers">Researchers</TabsTrigger>
-                  <TabsTrigger value="institutions">Institutions</TabsTrigger>
-                  <TabsTrigger value="datasets">Datasets</TabsTrigger>
+                  <TabsTrigger value="researchers">研究人員</TabsTrigger>
+                  <TabsTrigger value="institutions">機構</TabsTrigger>
+                  <TabsTrigger value="datasets">數據集</TabsTrigger>
                 </TabsList>
                 
                 <TabsContent value="researchers" className="space-y-6 mt-6">

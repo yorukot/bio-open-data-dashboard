@@ -12,10 +12,10 @@ export default function StatisticsPage() {
           <div className="max-w-7xl mx-auto">
             <div className="mb-8">
               <h2 className="text-3xl font-bold tracking-tight mb-2">
-                Data Statistics
+                數據統計
               </h2>
               <p className="text-muted-foreground">
-                Comprehensive statistical analysis and visualization of biological data.
+                生物數據的綜合統計分析和可視化。
               </p>
             </div>
 
@@ -23,28 +23,28 @@ export default function StatisticsPage() {
               {/* Key Metrics Section */}
               <section>
                 <div className="mb-6">
-                  <h3 className="text-2xl font-semibold tracking-tight mb-2">Key Metrics</h3>
-                  <p className="text-muted-foreground">Overview of essential data statistics and performance indicators</p>
+                  <h3 className="text-2xl font-semibold tracking-tight mb-2">關鍵指標</h3>
+                  <p className="text-muted-foreground">基本數據統計和性能指標概覽</p>
                 </div>
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                 <ChartPlaceholder
-                  title="Total Datasets"
-                  description="Number of available datasets"
+                  title="數據集總數"
+                  description="可用數據集的數量"
                   type="trend"
                 />
                 <ChartPlaceholder
-                  title="Data Volume"
-                  description="Total size of biological data"
+                  title="數據量"
+                  description="生物數據的總大小"
                   type="bar"
                 />
                 <ChartPlaceholder
-                  title="Species Coverage"
-                  description="Number of species represented"
+                  title="物種覆蓋率"
+                  description="代表的物種數量"
                   type="pie"
                 />
                 <ChartPlaceholder
-                  title="Growth Rate"
-                  description="Data collection growth over time"
+                  title="增長率"
+                  description="數據收集隨時間的增長"
                   type="line"
                 />
                 </div>
@@ -53,18 +53,18 @@ export default function StatisticsPage() {
               {/* Data Distribution Section */}
               <section>
                 <div className="mb-6">
-                  <h3 className="text-2xl font-semibold tracking-tight mb-2">Data Distribution</h3>
-                  <p className="text-muted-foreground">Analysis of data types, collection patterns, and temporal trends</p>
+                  <h3 className="text-2xl font-semibold tracking-tight mb-2">數據分佈</h3>
+                  <p className="text-muted-foreground">數據類型、收集模式和時間趨勢分析</p>
                 </div>
                 <div className="grid gap-6 md:grid-cols-2">
                 <ChartPlaceholder
-                  title="Dataset Distribution by Type"
-                  description="Breakdown of different biological data types"
+                  title="按類型的數據集分佈"
+                  description="不同生物數據類型的細分"
                   type="pie"
                 />
                 <ChartPlaceholder
-                  title="Monthly Data Collection"
-                  description="Data collection trends over the past year"
+                  title="月度數據收集"
+                  description="過去一年的數據收集趨勢"
                   type="line"
                 />
                 </div>
@@ -73,23 +73,23 @@ export default function StatisticsPage() {
               {/* Quality & Performance Section */}
               <section>
                 <div className="mb-6">
-                  <h3 className="text-2xl font-semibold tracking-tight mb-2">Quality & Performance</h3>
-                  <p className="text-muted-foreground">Data quality metrics, access patterns, and system performance</p>
+                  <h3 className="text-2xl font-semibold tracking-tight mb-2">質量與性能</h3>
+                  <p className="text-muted-foreground">數據質量指標、訪問模式和系統性能</p>
                 </div>
                 <div className="grid gap-6 md:grid-cols-3">
                 <ChartPlaceholder
-                  title="Geographic Distribution"
-                  description="Data sources by geographic region"
+                  title="地理分佈"
+                  description="按地理區域的數據來源"
                   type="bar"
                 />
                 <ChartPlaceholder
-                  title="Quality Score Distribution"
-                  description="Data quality metrics across datasets"
+                  title="質量評分分佈"
+                  description="跨數據集的數據質量指標"
                   type="bar"
                 />
                 <ChartPlaceholder
-                  title="Access Frequency"
-                  description="Most frequently accessed datasets"
+                  title="訪問頻率"
+                  description="最常訪問的數據集"
                   type="trend"
                 />
                 </div>
@@ -98,23 +98,23 @@ export default function StatisticsPage() {
               {/* Research & Biology Section */}
               <section>
                 <div className="mb-6">
-                  <h3 className="text-2xl font-semibold tracking-tight mb-2">Research & Biology</h3>
-                  <p className="text-muted-foreground">Taxonomic analysis, research citations, and biological data insights</p>
+                  <h3 className="text-2xl font-semibold tracking-tight mb-2">研究與生物學</h3>
+                  <p className="text-muted-foreground">分類學分析、研究引用和生物數據洞察</p>
                 </div>
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 <ChartPlaceholder
-                  title="Taxonomic Hierarchy"
-                  description="Species classification breakdown"
+                  title="分類層次"
+                  description="物種分類細分"
                   type="pie"
                 />
                 <ChartPlaceholder
-                  title="Data Age Distribution"
-                  description="Age of datasets in the system"
+                  title="數據年齡分佈"
+                  description="系統中數據集的年齡"
                   type="bar"
                 />
                 <ChartPlaceholder
-                  title="Research Citations"
-                  description="Citation trends for datasets"
+                  title="研究引用"
+                  description="數據集的引用趨勢"
                   type="line"
                 />
                 </div>
@@ -123,28 +123,28 @@ export default function StatisticsPage() {
               {/* System Analytics Section */}
               <section>
                 <div className="mb-6">
-                  <h3 className="text-2xl font-semibold tracking-tight mb-2">System Analytics</h3>
-                  <p className="text-muted-foreground">Performance monitoring, usage statistics, and system health metrics</p>
+                  <h3 className="text-2xl font-semibold tracking-tight mb-2">系統分析</h3>
+                  <p className="text-muted-foreground">性能監控、使用統計和系統健康指標</p>
                 </div>
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                 <ChartPlaceholder
-                  title="Query Response Time"
-                  description="Average database query performance"
+                  title="查詢響應時間"
+                  description="平均數據庫查詢性能"
                   type="line"
                 />
                 <ChartPlaceholder
-                  title="Storage Utilization"
-                  description="Current storage usage and capacity"
+                  title="存儲利用率"
+                  description="當前存儲使用和容量"
                   type="bar"
                 />
                 <ChartPlaceholder
-                  title="API Request Volume"
-                  description="Daily API usage statistics"
+                  title="API請求量"
+                  description="每日API使用統計"
                   type="trend"
                 />
                 <ChartPlaceholder
-                  title="User Activity"
-                  description="Active users and session metrics"
+                  title="用戶活動"
+                  description="活躍用戶和會話指標"
                   type="line"
                 />
                 </div>
@@ -153,23 +153,23 @@ export default function StatisticsPage() {
               {/* Data Validation Section */}
               <section>
                 <div className="mb-6">
-                  <h3 className="text-2xl font-semibold tracking-tight mb-2">Data Validation</h3>
-                  <p className="text-muted-foreground">Data quality assessment, validation status, and error tracking</p>
+                  <h3 className="text-2xl font-semibold tracking-tight mb-2">數據驗證</h3>
+                  <p className="text-muted-foreground">數據質量評估、驗證狀態和錯誤跟踪</p>
                 </div>
                 <div className="grid gap-6 md:grid-cols-3">
                 <ChartPlaceholder
-                  title="Data Validation Status"
-                  description="Validation success and failure rates"
+                  title="數據驗證狀態"
+                  description="驗證成功和失敗率"
                   type="pie"
                 />
                 <ChartPlaceholder
-                  title="Error Rate Trends"
-                  description="Data processing error patterns"
+                  title="錯誤率趨勢"
+                  description="數據處理錯誤模式"
                   type="line"
                 />
                 <ChartPlaceholder
-                  title="Completeness Score"
-                  description="Data completeness across fields"
+                  title="完整性評分"
+                  description="跨字段的數據完整性"
                   type="bar"
                 />
                 </div>
@@ -178,18 +178,18 @@ export default function StatisticsPage() {
               {/* Publications Section */}
               <section>
                 <div className="mb-6">
-                  <h3 className="text-2xl font-semibold tracking-tight mb-2">Publications</h3>
-                  <p className="text-muted-foreground">Research publication metrics and impact analysis</p>
+                  <h3 className="text-2xl font-semibold tracking-tight mb-2">出版物</h3>
+                  <p className="text-muted-foreground">研究出版物指標和影響分析</p>
                 </div>
                 <div className="grid gap-6 md:grid-cols-2">
                 <ChartPlaceholder
-                  title="Publication Timeline"
-                  description="Research publications using our data over time"
+                  title="出版時間線"
+                  description="使用我們數據的研究出版物隨時間變化"
                   type="line"
                 />
                 <ChartPlaceholder
-                  title="Impact Factor Distribution"
-                  description="Journal impact factors of citing publications"
+                  title="影響因子分佈"
+                  description="引用出版物的期刊影響因子"
                   type="bar"
                 />
                 </div>
@@ -198,23 +198,23 @@ export default function StatisticsPage() {
               {/* Collaboration Section */}
               <section>
                 <div className="mb-6">
-                  <h3 className="text-2xl font-semibold tracking-tight mb-2">Collaboration</h3>
-                  <p className="text-muted-foreground">Inter-institutional collaboration patterns and global usage analysis</p>
+                  <h3 className="text-2xl font-semibold tracking-tight mb-2">合作</h3>
+                  <p className="text-muted-foreground">機構間合作模式和全球使用分析</p>
                 </div>
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 <ChartPlaceholder
-                  title="Institution Network"
-                  description="Collaboration patterns between institutions"
+                  title="機構網絡"
+                  description="機構間的合作模式"
                   type="trend"
                 />
                 <ChartPlaceholder
-                  title="Research Field Coverage"
-                  description="Distribution across biological research areas"
+                  title="研究領域覆蓋"
+                  description="跨生物研究領域的分佈"
                   type="pie"
                 />
                 <ChartPlaceholder
-                  title="International Usage"
-                  description="Global usage patterns by country"
+                  title="國際使用"
+                  description="按國家的全球使用模式"
                   type="bar"
                 />
                 </div>
@@ -223,28 +223,28 @@ export default function StatisticsPage() {
               {/* Machine Learning Section */}
               <section>
                 <div className="mb-6">
-                  <h3 className="text-2xl font-semibold tracking-tight mb-2">Machine Learning</h3>
-                  <p className="text-muted-foreground">AI model performance, anomaly detection, and advanced analytics</p>
+                  <h3 className="text-2xl font-semibold tracking-tight mb-2">機器學習</h3>
+                  <p className="text-muted-foreground">AI模型性能、異常檢測和高級分析</p>
                 </div>
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                 <ChartPlaceholder
-                  title="Prediction Accuracy"
-                  description="ML model performance metrics"
+                  title="預測準確性"
+                  description="機器學習模型性能指標"
                   type="line"
                 />
                 <ChartPlaceholder
-                  title="Anomaly Detection"
-                  description="Data anomalies and outliers"
+                  title="異常檢測"
+                  description="數據異常和離群值"
                   type="trend"
                 />
                 <ChartPlaceholder
-                  title="Correlation Matrix"
-                  description="Inter-dataset correlation analysis"
+                  title="相關矩陣"
+                  description="數據集間相關性分析"
                   type="bar"
                 />
                 <ChartPlaceholder
-                  title="Clustering Results"
-                  description="Data clustering and segmentation"
+                  title="聚類結果"
+                  description="數據聚類和分段"
                   type="pie"
                 />
                 </div>
@@ -253,23 +253,23 @@ export default function StatisticsPage() {
               {/* Infrastructure Section */}
               <section>
                 <div className="mb-6">
-                  <h3 className="text-2xl font-semibold tracking-tight mb-2">Infrastructure</h3>
-                  <p className="text-muted-foreground">Server resources, performance monitoring, and capacity planning</p>
+                  <h3 className="text-2xl font-semibold tracking-tight mb-2">基礎設施</h3>
+                  <p className="text-muted-foreground">服務器資源、性能監控和容量規劃</p>
                 </div>
                 <div className="grid gap-6 md:grid-cols-3">
                 <ChartPlaceholder
-                  title="CPU Usage Patterns"
-                  description="Server CPU utilization over time"
+                  title="CPU使用模式"
+                  description="服務器CPU隨時間的利用率"
                   type="line"
                 />
                 <ChartPlaceholder
-                  title="Memory Consumption"
-                  description="RAM usage and optimization metrics"
+                  title="內存消耗"
+                  description="RAM使用和優化指標"
                   type="bar"
                 />
                 <ChartPlaceholder
-                  title="Network Bandwidth"
-                  description="Data transfer and bandwidth usage"
+                  title="網絡帶寬"
+                  description="數據傳輸和帶寬使用"
                   type="trend"
                 />
                 </div>
