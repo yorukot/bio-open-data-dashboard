@@ -1,5 +1,6 @@
-import { AppSidebar } from "@/components/app-sidebar"
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/app-sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { ThemeSwitcher } from "@/components/theme-switcher";
 
 export default function Home() {
   return (
@@ -17,12 +18,15 @@ export default function Home() {
         <div className="flex-1 p-6">
           <div className="max-w-4xl mx-auto">
             <div className="mb-8">
-              <h2 className="text-3xl font-bold tracking-tight mb-2">Welcome to Bio Open Data Dashboard</h2>
+              <h2 className="text-3xl font-bold tracking-tight mb-2">
+                Welcome to Bio Open Data Dashboard
+              </h2>
               <p className="text-muted-foreground">
-                Explore and analyze biological datasets with powerful visualization and export tools.
+                Explore and analyze biological datasets with powerful
+                visualization and export tools.
               </p>
             </div>
-            
+
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               <div className="rounded-lg border bg-card text-card-foreground shadow-sm p-6">
                 <h3 className="font-semibold text-lg mb-2">Data Sources</h3>
@@ -30,14 +34,15 @@ export default function Home() {
                   Connect to various biological databases and data repositories.
                 </p>
               </div>
-              
+
               <div className="rounded-lg border bg-card text-card-foreground shadow-sm p-6">
                 <h3 className="font-semibold text-lg mb-2">Visualizations</h3>
                 <p className="text-sm text-muted-foreground">
-                  Create interactive charts and graphs from your biological data.
+                  Create interactive charts and graphs from your biological
+                  data.
                 </p>
               </div>
-              
+
               <div className="rounded-lg border bg-card text-card-foreground shadow-sm p-6">
                 <h3 className="font-semibold text-lg mb-2">Analysis Tools</h3>
                 <p className="text-sm text-muted-foreground">
@@ -48,6 +53,7 @@ export default function Home() {
           </div>
         </div>
       </main>
+      <ThemeSwitcher />
     </SidebarProvider>
   );
 }
