@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Moon, Sun, Monitor } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 
 import { Button } from "@/components/ui/button";
@@ -47,8 +47,6 @@ export function ThemeSwitcher({
   const cycleTheme = () => {
     if (theme === "light") {
       setTheme("dark");
-    } else if (theme === "dark") {
-      setTheme("system");
     } else {
       setTheme("light");
     }
@@ -60,8 +58,6 @@ export function ThemeSwitcher({
         return <Sun className="h-4 w-4" />;
       case "dark":
         return <Moon className="h-4 w-4" />;
-      case "system":
-        return <Monitor className="h-4 w-4" />;
       default:
         return <Sun className="h-4 w-4" />;
     }
@@ -73,8 +69,6 @@ export function ThemeSwitcher({
         return "淺色模式";
       case "dark":
         return "深色模式";
-      case "system":
-        return "跟隨系統";
       default:
         return "主題";
     }
