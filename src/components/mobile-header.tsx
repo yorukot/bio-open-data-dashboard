@@ -19,9 +19,11 @@ export function MobileHeader() {
         >
           <Menu className="h-4 w-4" />
         </Button>
-        
-        <h1 className="text-lg font-semibold">Bio Data Dashboard</h1>
-        
+
+        <h1 className="text-lg font-semibold text-primary">
+          Bio Data Dashboard
+        </h1>
+
         <ThemeSwitcher className="h-8 w-8" variant="ghost" />
       </div>
     </header>
