@@ -1,6 +1,6 @@
 import { AppSidebar } from "@/components/app-sidebar";
 import { ChartPlaceholder } from "@/components/chart-placeholder";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 export default function StatisticsPage() {
   return (
@@ -10,8 +10,7 @@ export default function StatisticsPage() {
         <main className="flex-1 flex flex-col overflow-hidden">
         <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <div className="container flex h-14 items-center">
-            <SidebarTrigger />
-            <div className="ml-4">
+            <div>
               <h1 className="text-xl font-semibold">Statistics</h1>
             </div>
           </div>

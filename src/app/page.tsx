@@ -1,5 +1,5 @@
 import { AppSidebar } from "@/components/app-sidebar";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 export default function Home() {
   return (
@@ -9,8 +9,7 @@ export default function Home() {
         <main className="flex-1 flex flex-col overflow-hidden">
         <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <div className="container flex h-14 items-center">
-            <SidebarTrigger />
-            <div className="ml-4">
+            <div>
               <h1 className="text-xl font-semibold">Bio Open Data Dashboard</h1>
             </div>
           </div>
