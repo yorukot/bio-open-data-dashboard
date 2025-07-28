@@ -19,7 +19,7 @@ import { ThemeSwitcher } from "@/components/theme-switcher";
 const items = [
   {
     title: "地圖",
-    url: "#",
+    url: "/map",
     icon: Map,
   },
   {
