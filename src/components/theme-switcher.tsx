@@ -70,11 +70,12 @@ export function ThemeSwitcher() {
         <TooltipTrigger asChild>
           <Button
             variant="outline"
-            size="icon"
+            size="sm"
             onClick={cycleTheme}
-            className="h-9 w-9 fixed bottom-6 right-6 z-50 shadow-lg hover:shadow-xl transition-shadow"
+            className="w-full justify-start"
           >
             {getIcon()}
+            <span className="ml-2">切換主題</span>
           </Button>
         </TooltipTrigger>
         <TooltipContent>

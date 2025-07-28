@@ -1,15 +1,10 @@
 "use client"
 
 import {
-  Database,
+  Map,
   BarChart3,
-  Settings,
-  Home,
-  FileText,
-  FileJson,
-  FileSpreadsheet,
-  FileCode,
-  FileImage,
+  Trophy,
+  Download,
 } from "lucide-react"
 
 import {
@@ -23,59 +18,31 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
+import { ThemeSwitcher } from "@/components/theme-switcher"
 
 const items = [
   {
-    title: "Dashboard",
+    title: "地圖",
     url: "#",
-    icon: Home,
+    icon: Map,
   },
   {
-    title: "Data Sources",
-    url: "#",
-    icon: Database,
-  },
-  {
-    title: "Visualizations",
+    title: "統計",
     url: "#",
     icon: BarChart3,
   },
   {
-    title: "Analysis",
+    title: "排行",
     url: "#",
-    icon: FileText,
+    icon: Trophy,
   },
   {
-    title: "Settings",
+    title: "導出",
     url: "#",
-    icon: Settings,
+    icon: Download,
   },
 ]
 
-const exportOptions = [
-  {
-    title: "Export to JSON",
-    icon: FileJson,
-    action: () => console.log("Export to JSON"),
-  },
-  {
-    title: "Export to CSV",
-    icon: FileSpreadsheet,
-    action: () => console.log("Export to CSV"),
-  },
-  {
-    title: "Export to XML",
-    icon: FileCode,
-    action: () => console.log("Export to XML"),
-  },
-  {
-    title: "Export to PDF",
-    icon: FileImage,
-    action: () => console.log("Export to PDF"),
-  },
-]
 
 export function AppSidebar() {
   return (
@@ -100,26 +67,9 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <SidebarGroup>
-          <SidebarGroupLabel>Export Data</SidebarGroupLabel>
-          <Separator className="mb-2" />
-          <SidebarGroupContent>
-            <div className="space-y-1">
-              {exportOptions.map((option) => (
-                <Button
-                  key={option.title}
-                  variant="ghost"
-                  size="sm"
-                  className="w-full justify-start"
-                  onClick={option.action}
-                >
-                  <option.icon className="mr-2 h-4 w-4" />
-                  {option.title}
-                </Button>
-              ))}
-            </div>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        <div className="p-2">
+          <ThemeSwitcher />
+        </div>
       </SidebarFooter>
     </Sidebar>
   )

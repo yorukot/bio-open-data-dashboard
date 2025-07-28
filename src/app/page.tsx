@@ -1,6 +1,5 @@
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { ThemeSwitcher } from "@/components/theme-switcher";
 
 export default function Home() {
   return (
@@ -53,7 +52,6 @@ export default function Home() {
           </div>
         </div>
       </main>
-      <ThemeSwitcher />
     </SidebarProvider>
   );
 }
