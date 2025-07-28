@@ -6,7 +6,6 @@ import {
   Settings,
   Home,
   FileText,
-  Download,
   FileJson,
   FileSpreadsheet,
   FileCode,
