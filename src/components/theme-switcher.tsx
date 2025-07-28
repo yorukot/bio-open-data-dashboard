@@ -1,87 +1,100 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Moon, Sun, Monitor } from "lucide-react"
-import { useTheme } from "next-themes"
+import * as React from "react";
+import { Moon, Sun, Monitor } from "lucide-react";
+import { useTheme } from "next-themes";
 
-import { Button } from "@/components/ui/button"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
+import { Button } from "@/components/ui/button";
+import { SidebarMenuButton } from "@/components/ui/sidebar";
+import { cn } from "@/lib/utils";
 
-export function ThemeSwitcher() {
-  const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = React.useState(false)
+export function ThemeSwitcher({
+  className,
+  asMenuItem = false,
+}: {
+  className?: string;
+  asMenuItem?: boolean;
+}) {
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {
-    setMounted(true)
-  }, [])
+    setMounted(true);
+  }, []);
 
   if (!mounted) {
+    if (asMenuItem) {
+      return (
+        <SidebarMenuButton className={className}>
+          <Sun className="h-4 w-4" />
+          <span>主題</span>
+        </SidebarMenuButton>
+      );
+    }
     return (
-      <Button variant="outline" size="icon" className="h-9 w-9">
+      <Button
+        variant="outline"
+        size="icon"
+        className={cn("h-9 w-9", className)}
+      >
         <Sun className="h-4 w-4" />
       </Button>
-    )
+    );
   }
 
   const cycleTheme = () => {
     if (theme === "light") {
-      setTheme("dark")
+      setTheme("dark");
     } else if (theme === "dark") {
-      setTheme("system")
+      setTheme("system");
     } else {
-      setTheme("light")
+      setTheme("light");
     }
-  }
+  };
 
   const getIcon = () => {
     switch (theme) {
       case "light":
-        return <Sun className="h-4 w-4" />
+        return <Sun className="h-4 w-4" />;
       case "dark":
-        return <Moon className="h-4 w-4" />
+        return <Moon className="h-4 w-4" />;
       case "system":
-        return <Monitor className="h-4 w-4" />
+        return <Monitor className="h-4 w-4" />;
       default:
-        return <Sun className="h-4 w-4" />
+        return <Sun className="h-4 w-4" />;
     }
-  }
+  };
 
-  const getTooltipText = () => {
+  const getThemeName = () => {
     switch (theme) {
       case "light":
-        return "Switch to dark mode"
+        return "淺色模式";
       case "dark":
-        return "Switch to system mode"
+        return "深色模式";
       case "system":
-        return "Switch to light mode"
+        return "跟隨系統";
       default:
-        return "Switch theme"
+        return "主題";
     }
+  };
+
+  if (asMenuItem) {
+    return (
+      <SidebarMenuButton onClick={cycleTheme} className={className}>
+        {getIcon()}
+        <span>{getThemeName()}</span>
+      </SidebarMenuButton>
+    );
   }
 
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={cycleTheme}
-            className="w-full justify-start"
-          >
-            {getIcon()}
-            <span className="ml-2">切換主題</span>
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>{getTooltipText()}</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-  )
+    <Button
+      variant="outline"
+      size="icon"
+      onClick={cycleTheme}
+      className={cn("h-8 w-8", className)}
+    >
+      {getIcon()}
+    </Button>
+  );
 }

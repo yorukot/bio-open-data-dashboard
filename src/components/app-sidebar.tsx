@@ -1,11 +1,6 @@
-"use client"
+"use client";
 
-import {
-  Map,
-  BarChart3,
-  Trophy,
-  Download,
-} from "lucide-react"
+import { Map, BarChart3, Trophy, Download, ChevronLeft } from "lucide-react";
 
 import {
   Sidebar,
@@ -17,8 +12,10 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
-import { ThemeSwitcher } from "@/components/theme-switcher"
+  useSidebar,
+} from "@/components/ui/sidebar";
+import { Button } from "@/components/ui/button";
+import { ThemeSwitcher } from "@/components/theme-switcher";
 
 const items = [
   {
@@ -28,7 +25,7 @@ const items = [
   },
   {
     title: "統計",
-    url: "#",
+    url: "/statistics",
     icon: BarChart3,
   },
   {
@@ -41,12 +38,13 @@ const items = [
     url: "#",
     icon: Download,
   },
-]
-
+];
 
 export function AppSidebar() {
+  const { toggleSidebar, open } = useSidebar();
+
   return (
-    <Sidebar>
+    <Sidebar collapsible="icon" className="relative">
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Bio Data Dashboard</SidebarGroupLabel>
@@ -67,10 +65,22 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <div className="p-2">
-          <ThemeSwitcher />
-        </div>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <ThemeSwitcher asMenuItem={true} />
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton onClick={toggleSidebar}>
+              <ChevronLeft
+                className={`h-4 w-4 transition-transform ${
+                  !open ? "rotate-180" : ""
+                }`}
+              />
+              <span>收合側邊欄</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
       </SidebarFooter>
     </Sidebar>
-  )
+  );
 }
