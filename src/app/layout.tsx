@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { MobileHeader } from "@/components/mobile-header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,7 +40,10 @@ export default function RootLayout({
           <div className="flex h-screen">
             <SidebarProvider>
               <AppSidebar />
-              {children}
+              <div className="flex-1 flex flex-col">
+                <MobileHeader />
+                {children}
+              </div>
             </SidebarProvider>
           </div>
         </ThemeProvider>

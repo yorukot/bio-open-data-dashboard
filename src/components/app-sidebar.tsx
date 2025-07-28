@@ -15,6 +15,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { ThemeSwitcher } from "@/components/theme-switcher";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const items = [
   {
@@ -41,6 +42,7 @@ const items = [
 
 export function AppSidebar() {
   const { toggleSidebar, open } = useSidebar();
+  const isMobile = useIsMobile();
 
   return (
     <Sidebar collapsible="icon" className="relative">
@@ -63,23 +65,25 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <ThemeSwitcher asMenuItem={true} />
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarMenuButton onClick={toggleSidebar}>
-              <ChevronLeft
-                className={`h-4 w-4 transition-transform ${
-                  !open ? "rotate-180" : ""
-                }`}
-              />
-              <span>收合側邊欄</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarFooter>
+      {!isMobile && (
+        <SidebarFooter>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <ThemeSwitcher asMenuItem={true} />
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton onClick={toggleSidebar}>
+                <ChevronLeft
+                  className={`h-4 w-4 transition-transform ${
+                    !open ? "rotate-180" : ""
+                  }`}
+                />
+                <span>收合側邊欄</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarFooter>
+      )}
     </Sidebar>
   );
 }

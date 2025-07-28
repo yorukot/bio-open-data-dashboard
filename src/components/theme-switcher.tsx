@@ -11,9 +11,11 @@ import { cn } from "@/lib/utils";
 export function ThemeSwitcher({
   className,
   asMenuItem = false,
+  variant = "outline",
 }: {
   className?: string;
   asMenuItem?: boolean;
+  variant?: "outline" | "ghost";
 }) {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
@@ -33,7 +35,7 @@ export function ThemeSwitcher({
     }
     return (
       <Button
-        variant="outline"
+        variant={variant}
         size="icon"
         className={cn("h-9 w-9", className)}
       >
@@ -89,7 +91,7 @@ export function ThemeSwitcher({
 
   return (
     <Button
-      variant="outline"
+      variant={variant}
       size="icon"
       onClick={cycleTheme}
       className={cn("h-8 w-8", className)}
