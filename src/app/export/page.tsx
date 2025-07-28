@@ -3,8 +3,6 @@
 import { useState } from "react"
 import { format } from "date-fns"
 import { Calendar as CalendarIcon, Download } from "lucide-react"
-import { SidebarProvider } from "@/components/ui/sidebar"
-import { AppSidebar } from "@/components/app-sidebar"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import {
@@ -120,18 +118,15 @@ export default function ExportPage() {
   }
 
   return (
-    <div className="flex h-screen">
-      <SidebarProvider>
-        <AppSidebar />
-        <main className="flex-1 flex flex-col overflow-hidden">
-          <div className="flex-1 p-6 overflow-auto">
-            <div className="max-w-6xl mx-auto">
-              <h2 className="text-3xl font-bold tracking-tight mb-2">
-                資料導出
-              </h2>
-              <p className="text-muted-foreground mb-8">
-                選擇篩選條件並導出生物資料為 JSON 或 CSV 格式
-              </p>
+    <main className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 p-6 overflow-auto">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold tracking-tight mb-2">
+            資料導出
+          </h2>
+          <p className="text-muted-foreground mb-8">
+            選擇篩選條件並導出生物資料為 JSON 或 CSV 格式
+          </p>
 
               <div className="space-y-6">
                 {/* Region Filter */}
@@ -253,7 +248,5 @@ export default function ExportPage() {
             </div>
           </div>
         </main>
-      </SidebarProvider>
-    </div>
   )
 }

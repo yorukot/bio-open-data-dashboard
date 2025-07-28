@@ -1,15 +1,10 @@
-import { AppSidebar } from "@/components/app-sidebar";
 import { ChartPlaceholder } from "@/components/chart-placeholder";
-import { SidebarProvider } from "@/components/ui/sidebar";
 
 export default function StatisticsPage() {
   return (
-    <div className="flex h-screen">
-      <SidebarProvider>
-        <AppSidebar />
-        <main className="flex-1 flex flex-col overflow-hidden">
-        <div className="flex-1 p-6 overflow-auto">
-          <div className="max-w-7xl mx-auto">
+    <main className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 p-6 overflow-auto">
+        <div className="max-w-7xl mx-auto">
             <div className="mb-8">
               <h2 className="text-3xl font-bold tracking-tight mb-2">
                 數據統計
@@ -277,8 +272,6 @@ export default function StatisticsPage() {
             </div>
           </div>
         </div>
-        </main>
-      </SidebarProvider>
-    </div>
-  );
+      </main>
+    );
 }

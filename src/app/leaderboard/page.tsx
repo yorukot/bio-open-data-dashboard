@@ -1,5 +1,3 @@
-import { AppSidebar } from "@/components/app-sidebar";
-import { SidebarProvider } from "@/components/ui/sidebar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Trophy, Medal, Award, Users, TrendingUp, Database } from "lucide-react";
 
@@ -191,12 +189,9 @@ function LeaderboardCard({ data }: { data: LeaderboardData }) {
 
 export default function LeaderboardPage() {
   return (
-    <div className="flex h-screen">
-      <SidebarProvider>
-        <AppSidebar />
-        <main className="flex-1 flex flex-col overflow-hidden">
-          <div className="flex-1 p-6 overflow-auto">
-            <div className="max-w-6xl mx-auto">
+    <main className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 p-6 overflow-auto">
+        <div className="max-w-6xl mx-auto">
               {/* Header Section */}
               <div className="mb-6">
                 <h2 className="text-3xl font-bold tracking-tight mb-2">排行榜</h2>
@@ -237,10 +232,8 @@ export default function LeaderboardPage() {
                   </div>
                 </TabsContent>
               </Tabs>
-            </div>
-          </div>
-        </main>
-      </SidebarProvider>
-    </div>
+        </div>
+      </div>
+    </main>
   );
 }

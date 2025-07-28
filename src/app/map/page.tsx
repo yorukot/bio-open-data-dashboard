@@ -3,8 +3,7 @@
 import React, { useRef, useEffect } from 'react';
 import Map from 'react-map-gl/mapbox';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { AppSidebar } from "@/components/app-sidebar";
-import { SidebarProvider, useSidebar } from "@/components/ui/sidebar";
+import { useSidebar } from "@/components/ui/sidebar";
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN!
 
@@ -43,12 +42,5 @@ function MapContent() {
 }
 
 export default function MapPage() {
-  return (
-    <div className="flex h-screen">
-      <SidebarProvider>
-        <AppSidebar />
-        <MapContent />
-      </SidebarProvider>
-    </div>
-  );
+  return <MapContent />;
 }
