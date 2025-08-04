@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { MobileHeader } from "@/components/mobile-header";
+import { QueryProvider } from "@/components/query-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,22 +32,24 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <div className="flex h-screen">
-            <SidebarProvider>
-              <AppSidebar />
-              <div className="flex-1 flex flex-col">
-                <MobileHeader />
-                {children}
-              </div>
-            </SidebarProvider>
-          </div>
-        </ThemeProvider>
+        <QueryProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className="flex h-screen">
+              <SidebarProvider>
+                <AppSidebar />
+                <div className="flex-1 flex flex-col">
+                  <MobileHeader />
+                  {children}
+                </div>
+              </SidebarProvider>
+            </div>
+          </ThemeProvider>
+        </QueryProvider>
       </body>
     </html>
   );
