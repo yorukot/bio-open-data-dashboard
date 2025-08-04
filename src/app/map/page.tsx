@@ -39,6 +39,7 @@ function MapContent() {
           style={{ width: "100%", height: "100%" }}
           mapStyle="mapbox://styles/mapbox/satellite-streets-v12"
           mapboxAccessToken={MAPBOX_TOKEN}
+          language="zh-Hant"
         />
       </div>
     </main>
