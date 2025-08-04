@@ -1,15 +1,18 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Map from "react-map-gl/mapbox";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useSidebar } from "@/components/ui/sidebar";
+import { MapControlPanel, DisplayMode } from "@/components/map-control-panel";
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN!;
 
 function MapContent() {
   const mapRef = useRef<any>(null);
   const { open } = useSidebar();
+  const [displayMode, setDisplayMode] = useState<DisplayMode>("bio");
+  const [currentDate, setCurrentDate] = useState(new Date());
 
   useEffect(() => {
     // Trigger map resize when sidebar state changes
@@ -24,7 +27,7 @@ function MapContent() {
 
   return (
     <main className="flex-1 flex flex-col overflow-hidden">
-      <div className="flex-1 overflow-hidden">
+      <div className="flex-1 overflow-hidden relative">
         <Map
           ref={mapRef}
           initialViewState={{
@@ -40,6 +43,12 @@ function MapContent() {
           mapStyle="mapbox://styles/mapbox/satellite-streets-v12"
           mapboxAccessToken={MAPBOX_TOKEN}
           language="zh-Hant"
+        />
+        <MapControlPanel
+          displayMode={displayMode}
+          onDisplayModeChange={setDisplayMode}
+          currentDate={currentDate}
+          onDateChange={setCurrentDate}
         />
       </div>
     </main>
