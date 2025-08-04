@@ -6,7 +6,7 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const startTime = searchParams.get('start_time');
     const endTime = searchParams.get('end_time');
-    const limit = searchParams.get('limit') || '1000';
+    const limit = searchParams.get('limit');
     const offset = searchParams.get('offset') || '0';
 
     if (!startTime || !endTime) {
@@ -33,14 +33,17 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const limitNum = parseInt(limit);
     const offsetNum = parseInt(offset);
+    let limitNum: number | null = null;
 
-    if (isNaN(limitNum) || limitNum <= 0 || limitNum > 10000) {
-      return NextResponse.json(
-        { error: 'limit must be a number between 1 and 10000' },
-        { status: 400 }
-      );
+    if (limit !== null) {
+      limitNum = parseInt(limit);
+      if (isNaN(limitNum) || limitNum <= 0) {
+        return NextResponse.json(
+          { error: 'limit must be a positive number' },
+          { status: 400 }
+        );
+      }
     }
 
     if (isNaN(offsetNum) || offsetNum < 0) {
@@ -50,7 +53,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const queryText = `
+    let queryText = `
       SELECT 
         time,
         longitude,
@@ -59,8 +62,17 @@ export async function GET(request: NextRequest) {
       FROM light_data 
       WHERE time >= $1 AND time <= $2
       ORDER BY time ASC
-      LIMIT $3 OFFSET $4
     `;
+
+    let queryParams: any[] = [startDate, endDate];
+
+    if (limitNum !== null) {
+      queryText += ` LIMIT $3 OFFSET $4`;
+      queryParams.push(limitNum, offsetNum);
+    } else if (offsetNum > 0) {
+      queryText += ` OFFSET $3`;
+      queryParams.push(offsetNum);
+    }
 
     const countQuery = `
       SELECT COUNT(*) as total
@@ -69,12 +81,12 @@ export async function GET(request: NextRequest) {
     `;
 
     const [dataResult, countResult] = await Promise.all([
-      query(queryText, [startDate, endDate, limitNum, offsetNum]),
+      query(queryText, queryParams),
       query(countQuery, [startDate, endDate])
     ]);
 
     const total = parseInt(countResult.rows[0].total);
-    const hasMore = offsetNum + limitNum < total;
+    const hasMore = limitNum !== null ? offsetNum + limitNum < total : false;
 
     return NextResponse.json({
       data: dataResult.rows,
