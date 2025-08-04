@@ -4,18 +4,18 @@ import { query } from '@/lib/db';
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    
+
     // Time filters (required with defaults)
     const startTime = searchParams.get('start_time') || '2020-01-01T00:00:00Z';
     const endTime = searchParams.get('end_time') || new Date().toISOString();
-    
+
     // Optional filters
     const bioGroup = searchParams.get('bio_group');
     const commonNameC = searchParams.get('common_name_c');
     const county = searchParams.get('county');
     const municipality = searchParams.get('municipality');
     const locality = searchParams.get('locality');
-    
+
     // Pagination parameters
     const limit = searchParams.get('limit');
     const offset = searchParams.get('offset') || '0';
@@ -81,7 +81,7 @@ export async function GET(request: NextRequest) {
         catalog_number,
         record_number
       FROM biological_data 
-      WHERE created >= $1 AND created <= $2
+      WHERE event_date >= $1 AND event_date <= $2
     `;
 
     const queryParams: any[] = [startDate, endDate];
@@ -118,7 +118,7 @@ export async function GET(request: NextRequest) {
       paramIndex++;
     }
 
-    queryText += ` ORDER BY created DESC`;
+    queryText += ` ORDER BY event_date DESC`;
 
     // Add pagination
     if (limitNum !== null) {
@@ -133,7 +133,7 @@ export async function GET(request: NextRequest) {
     let countQuery = `
       SELECT COUNT(*) as total
       FROM biological_data 
-      WHERE created >= $1 AND created <= $2
+      WHERE event_date >= $1 AND event_date <= $2
     `;
 
     const countParams: any[] = [startDate, endDate];
