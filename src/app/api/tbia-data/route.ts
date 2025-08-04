@@ -84,7 +84,7 @@ export async function GET(request: NextRequest) {
       WHERE created >= $1 AND created <= $2
     `;
 
-    let queryParams: any[] = [startDate, endDate];
+    const queryParams: any[] = [startDate, endDate];
     let paramIndex = 3;
 
     // Add optional filters
@@ -136,7 +136,7 @@ export async function GET(request: NextRequest) {
       WHERE created >= $1 AND created <= $2
     `;
 
-    let countParams: any[] = [startDate, endDate];
+    const countParams: any[] = [startDate, endDate];
     let countParamIndex = 3;
 
     if (bioGroup) {

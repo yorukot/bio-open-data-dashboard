@@ -64,7 +64,7 @@ export async function GET(request: NextRequest) {
       ORDER BY time ASC
     `;
 
-    let queryParams: any[] = [startDate, endDate];
+    const queryParams: any[] = [startDate, endDate];
 
     if (limitNum !== null) {
       queryText += ` LIMIT $3 OFFSET $4`;
