@@ -1,0 +1,491 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Bio Open Data Dashboard API",
+    "description": "API for accessing light pollution data and Taiwan Biodiversity Information (TBIA) dataset",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Development server"
+    }
+  ],
+  "paths": {
+    "/api/light-data": {
+      "get": {
+        "summary": "Get light pollution data",
+        "description": "Retrieve light pollution data with time-based filtering and pagination",
+        "tags": ["Light Data"],
+        "parameters": [
+          {
+            "name": "start_time",
+            "in": "query",
+            "required": true,
+            "description": "Start time for data retrieval (ISO 8601 format)",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2024-01-01T00:00:00Z"
+            }
+          },
+          {
+            "name": "end_time",
+            "in": "query",
+            "required": true,
+            "description": "End time for data retrieval (ISO 8601 format)",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2024-12-31T23:59:59Z"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Maximum number of records to return",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "example": 100
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "description": "Number of records to skip (for pagination)",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "example": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved light data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/LightDataRecord"
+                      }
+                    },
+                    "pagination": {
+                      "$ref": "#/components/schemas/PaginationInfo"
+                    },
+                    "time_range": {
+                      "$ref": "#/components/schemas/TimeRange"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tbia-data": {
+      "get": {
+        "summary": "Get TBIA biodiversity data",
+        "description": "Retrieve Taiwan Biodiversity Information (TBIA) dataset with multiple filtering options",
+        "tags": ["TBIA Data"],
+        "parameters": [
+          {
+            "name": "start_time",
+            "in": "query",
+            "required": false,
+            "description": "Start time for data retrieval (defaults to 2020-01-01T00:00:00Z)",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "default": "2020-01-01T00:00:00Z",
+              "example": "2023-01-01T00:00:00Z"
+            }
+          },
+          {
+            "name": "end_time",
+            "in": "query",
+            "required": false,
+            "description": "End time for data retrieval (defaults to current date)",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2023-12-31T23:59:59Z"
+            }
+          },
+          {
+            "name": "bio_group",
+            "in": "query",
+            "required": false,
+            "description": "Filter by biological group (Chinese values)",
+            "schema": {
+              "type": "string",
+              "enum": ["鳥類", "兩棲類", "哺乳類", "爬蟲類", "魚類", "昆蟲", "蜘蛛"],
+              "example": "鳥類"
+            }
+          },
+          {
+            "name": "common_name_c",
+            "in": "query",
+            "required": false,
+            "description": "Filter by common name (partial match, case-insensitive)",
+            "schema": {
+              "type": "string",
+              "example": "臺灣"
+            }
+          },
+          {
+            "name": "county",
+            "in": "query",
+            "required": false,
+            "description": "Filter by county (partial match, case-insensitive)",
+            "schema": {
+              "type": "string",
+              "example": "臺北市"
+            }
+          },
+          {
+            "name": "municipality",
+            "in": "query",
+            "required": false,
+            "description": "Filter by municipality (partial match, case-insensitive)",
+            "schema": {
+              "type": "string",
+              "example": "大安區"
+            }
+          },
+          {
+            "name": "locality",
+            "in": "query",
+            "required": false,
+            "description": "Filter by locality (partial match, case-insensitive)",
+            "schema": {
+              "type": "string",
+              "example": "公園"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Maximum number of records to return",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "example": 50
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "description": "Number of records to skip (for pagination)",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "example": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved TBIA data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/TBIADataRecord"
+                      }
+                    },
+                    "pagination": {
+                      "$ref": "#/components/schemas/PaginationInfo"
+                    },
+                    "filters": {
+                      "$ref": "#/components/schemas/TBIAFilters"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "LightDataRecord": {
+        "type": "object",
+        "properties": {
+          "time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp of the light measurement"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double",
+            "description": "Longitude coordinate"
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double",
+            "description": "Latitude coordinate"
+          },
+          "brightness": {
+            "type": "number",
+            "format": "double",
+            "description": "Light brightness measurement"
+          }
+        },
+        "required": ["time", "longitude", "latitude", "brightness"]
+      },
+      "TBIADataRecord": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique record identifier"
+          },
+          "source_scientific_name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Original scientific name from source"
+          },
+          "scientific_name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Standardized scientific name"
+          },
+          "common_name_c": {
+            "type": "string",
+            "nullable": true,
+            "description": "Common name in Chinese"
+          },
+          "bio_group": {
+            "type": "string",
+            "nullable": true,
+            "description": "Biological group classification",
+            "enum": ["鳥類", "兩棲類", "哺乳類", "爬蟲類", "魚類", "昆蟲", "蜘蛛"]
+          },
+          "event_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "Date when the observation occurred"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "Date when the record was created"
+          },
+          "dataset_name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Name of the source dataset"
+          },
+          "basis_of_record": {
+            "type": "string",
+            "nullable": true,
+            "description": "Type of record (e.g., Occurrence)"
+          },
+          "standard_latitude": {
+            "type": "number",
+            "format": "double",
+            "nullable": true,
+            "description": "Standardized latitude coordinate"
+          },
+          "standard_longitude": {
+            "type": "number",
+            "format": "double",
+            "nullable": true,
+            "description": "Standardized longitude coordinate"
+          },
+          "county": {
+            "type": "string",
+            "nullable": true,
+            "description": "County where observation was made"
+          },
+          "municipality": {
+            "type": "string",
+            "nullable": true,
+            "description": "Municipality where observation was made"
+          },
+          "locality": {
+            "type": "string",
+            "nullable": true,
+            "description": "Specific locality of observation"
+          },
+          "organism_quantity": {
+            "type": "string",
+            "nullable": true,
+            "description": "Number of organisms observed"
+          },
+          "taxon_id": {
+            "type": "string",
+            "nullable": true,
+            "description": "Taxonomic identifier"
+          },
+          "catalog_number": {
+            "type": "string",
+            "nullable": true,
+            "description": "Catalog number in collection"
+          },
+          "record_number": {
+            "type": "string",
+            "nullable": true,
+            "description": "Record number"
+          }
+        },
+        "required": ["id"]
+      },
+      "PaginationInfo": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "description": "Total number of records matching the query"
+          },
+          "limit": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Maximum number of records returned"
+          },
+          "offset": {
+            "type": "integer",
+            "description": "Number of records skipped"
+          },
+          "has_more": {
+            "type": "boolean",
+            "description": "Whether there are more records available"
+          }
+        },
+        "required": ["total", "offset", "has_more"]
+      },
+      "TimeRange": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Start time of the query range"
+          },
+          "end": {
+            "type": "string",
+            "format": "date-time",
+            "description": "End time of the query range"
+          }
+        },
+        "required": ["start", "end"]
+      },
+      "TBIAFilters": {
+        "type": "object",
+        "properties": {
+          "time_range": {
+            "$ref": "#/components/schemas/TimeRange"
+          },
+          "bio_group": {
+            "type": "string",
+            "nullable": true,
+            "description": "Applied bio group filter"
+          },
+          "common_name_c": {
+            "type": "string",
+            "nullable": true,
+            "description": "Applied common name filter"
+          },
+          "county": {
+            "type": "string",
+            "nullable": true,
+            "description": "Applied county filter"
+          },
+          "municipality": {
+            "type": "string",
+            "nullable": true,
+            "description": "Applied municipality filter"
+          },
+          "locality": {
+            "type": "string",
+            "nullable": true,
+            "description": "Applied locality filter"
+          }
+        },
+        "required": ["time_range"]
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Error message"
+          }
+        },
+        "required": ["error"]
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Light Data",
+      "description": "Light pollution measurement data"
+    },
+    {
+      "name": "TBIA Data",
+      "description": "Taiwan Biodiversity Information dataset"
+    }
+  ]
+}
