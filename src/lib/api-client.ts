@@ -24,7 +24,11 @@ class APIClient {
     endpoint: string,
     params?: Record<string, any>
   ): Promise<T> {
-    const url = new URL(`${this.baseURL}${endpoint}`);
+    // Handle both relative and absolute URLs
+    const fullPath = `${this.baseURL}${endpoint}`;
+    const url = fullPath.startsWith('http') 
+      ? new URL(fullPath)
+      : new URL(fullPath, window.location.origin);
 
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
@@ -94,7 +98,7 @@ class APIClient {
       throw new APIError(400, "offset must be a non-negative integer");
     }
 
-    return this.request<LightDataResponse>("/api/light-data", params);
+    return this.request<LightDataResponse>("/light-data", params);
   }
 
   async getTBIAData(params: TBIADataParams = {}): Promise<TBIADataResponse> {
@@ -131,7 +135,7 @@ class APIClient {
       throw new APIError(400, "offset must be a non-negative integer");
     }
 
-    return this.request<TBIADataResponse>("/api/tbia-data", params);
+    return this.request<TBIADataResponse>("/tbia-data", params);
   }
 }
 
