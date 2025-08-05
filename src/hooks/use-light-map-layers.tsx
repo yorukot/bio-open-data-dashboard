@@ -209,7 +209,7 @@ export function useLightMapLayers({
         map.removeSource("light-pollution");
       }
     };
-  }, [map, geoJSON, displayMode]);
+  }, [map, geoJSON]);
 
   // Control layer visibility based on display mode
   useEffect(() => {
