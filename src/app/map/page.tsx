@@ -155,8 +155,8 @@ function MapContent({
             zoom: 7,
           }}
           maxBounds={[
-            [118.0, 21.8], // Southwest corner
-            [122.2, 26.5], // Northeast corner
+            [119.0, 21.5], // Southwest corner
+            [122.2, 25.5], // Northeast corner
           ]}
           style={{ width: "100%", height: "100%" }}
           mapStyle="mapbox://styles/mapbox/satellite-streets-v12"
