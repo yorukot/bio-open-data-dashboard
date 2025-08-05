@@ -22,55 +22,79 @@ function MapContent() {
 
   // Generate date range for the selected month
   const dateRange = React.useMemo(() => {
-    const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-    const endOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0, 23, 59, 59, 999);
-    
+    const startOfMonth = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      1
+    );
+    const endOfMonth = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth() + 1,
+      0,
+      23,
+      59,
+      59,
+      999
+    );
+
     return {
       start_time: startOfMonth.toISOString(),
-      end_time: endOfMonth.toISOString()
+      end_time: endOfMonth.toISOString(),
     };
   }, [currentDate]);
 
   // Fetch animal data for the selected month
-  const { data: animalData, error: animalError } = useTBIAData({
-    ...dateRange,
-    limit: 1000, // Reasonable limit for map performance
-  }, {
-    enabled: displayMode === "bio" || displayMode === "bio-light"
-  });
+  const { data: animalData, error: animalError } = useTBIAData(
+    {
+      ...dateRange,
+      limit: 1000, // Reasonable limit for map performance
+    },
+    {
+      enabled: displayMode === "bio" || displayMode === "bio-light",
+    }
+  );
 
   // Fetch light pollution data progressively for the selected month
-  const { 
-    data: lightDataRecords, 
-    error: lightError, 
+  const {
+    data: lightDataRecords,
+    error: lightError,
     isLoading: lightLoading,
-    progress: lightProgress
+    progress: lightProgress,
   } = useProgressiveLightData({
     params: {
       ...dateRange,
     },
     enabled: displayMode === "light" || displayMode === "bio-light",
-    batchSize: 5000 // Fetch 5000 records per batch
+    batchSize: 5000, // Fetch 5000 records per batch
   });
 
   // Debug logging
   useEffect(() => {
     if (animalError) {
-      console.error('TBIA API Error:', animalError);
+      console.error("TBIA API Error:", animalError);
     }
     if (animalData) {
-      console.log('TBIA data loaded:', animalData.data?.length, 'records');
+      console.log("TBIA data loaded:", animalData.data?.length, "records");
     }
   }, [animalData, animalError]);
 
   useEffect(() => {
     if (lightError) {
-      console.error('Light API Error:', lightError);
+      console.error("Light API Error:", lightError);
     }
     if (lightDataRecords.length > 0) {
-      console.log('Light data loaded:', lightDataRecords.length, 'records');
-      console.log('Progress:', lightProgress.loaded, '/', lightProgress.total, 
-                  `(${lightProgress.total ? ((lightProgress.loaded / lightProgress.total) * 100).toFixed(1) : 0}%)`);
+      console.log("Light data loaded:", lightDataRecords.length, "records");
+      console.log(
+        "Progress:",
+        lightProgress.loaded,
+        "/",
+        lightProgress.total,
+        `(${
+          lightProgress.total
+            ? ((lightProgress.loaded / lightProgress.total) * 100).toFixed(1)
+            : 0
+        }%)`
+      );
     }
   }, [lightDataRecords, lightError, lightProgress]);
 
@@ -88,13 +112,13 @@ function MapContent() {
   useAnimalMapLayers({
     map: mapRef.current?.getMap() || null,
     geoJSON: animalGeoJSON,
-    displayMode
+    displayMode,
   });
 
   useLightMapLayers({
     map: mapRef.current?.getMap() || null,
     geoJSON: lightGeoJSON,
-    displayMode
+    displayMode,
   });
 
   useEffect(() => {
@@ -133,20 +157,26 @@ function MapContent() {
           currentDate={currentDate}
           onDateChange={setCurrentDate}
         />
-        
+
         {/* Light pollution loading indicator */}
-        {(displayMode === "light" || displayMode === "bio-light") && lightLoading && (
-          <div className="absolute top-4 right-4 bg-black/80 text-white px-4 py-2 rounded-lg">
-            <div className="flex items-center space-x-2">
-              <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
-              <span className="text-sm">
-                載入光污染數據: {lightProgress.loaded.toLocaleString()}
-                {lightProgress.total && ` / ${lightProgress.total.toLocaleString()}`}
-                {lightProgress.total && ` (${((lightProgress.loaded / lightProgress.total) * 100).toFixed(1)}%)`}
-              </span>
+        {(displayMode === "light" || displayMode === "bio-light") &&
+          lightLoading && (
+            <div className="absolute top-4 right-4 bg-black/80 text-white px-4 py-2 rounded-lg">
+              <div className="flex items-center space-x-2">
+                <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                <span className="text-sm">
+                  載入光污染數據：{lightProgress.loaded.toLocaleString()}
+                  {lightProgress.total &&
+                    ` / ${lightProgress.total.toLocaleString()}`}
+                  {lightProgress.total &&
+                    ` (${(
+                      (lightProgress.loaded / lightProgress.total) *
+                      100
+                    ).toFixed(1)}%)`}
+                </span>
+              </div>
             </div>
-          </div>
-        )}
+          )}
       </div>
     </main>
   );
