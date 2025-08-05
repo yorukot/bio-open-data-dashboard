@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useMemo, useCallback } from "react";
 import Map, { MapRef } from "react-map-gl/mapbox";
 import "mapbox-gl/dist/mapbox-gl.css";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useSidebar } from "@/components/ui/sidebar";
 import { MapControlPanel, DisplayMode } from "@/components/map-control-panel";
 import { useTBIAData } from "@/lib/hooks/use-api";
@@ -15,14 +16,24 @@ import { LightPollutionLoading } from "@/components/light-pollution-loading";
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN!;
 
-function MapContent() {
+interface MapContentProps {
+  displayMode: DisplayMode;
+  currentDate: Date;
+  onDisplayModeChange: (mode: DisplayMode) => void;
+  onDateChange: (date: Date) => void;
+}
+
+function MapContent({
+  displayMode,
+  currentDate,
+  onDisplayModeChange,
+  onDateChange,
+}: MapContentProps) {
   const mapRef = useRef<MapRef>(null);
   const { open } = useSidebar();
-  const [displayMode, setDisplayMode] = useState<DisplayMode>("bio");
-  const [currentDate, setCurrentDate] = useState(new Date());
 
   // Generate date range for the selected month
-  const dateRange = React.useMemo(() => {
+  const dateRange = useMemo(() => {
     const startOfMonth = new Date(
       currentDate.getFullYear(),
       currentDate.getMonth(),
@@ -154,9 +165,9 @@ function MapContent() {
         />
         <MapControlPanel
           displayMode={displayMode}
-          onDisplayModeChange={setDisplayMode}
+          onDisplayModeChange={onDisplayModeChange}
           currentDate={currentDate}
-          onDateChange={setCurrentDate}
+          onDateChange={onDateChange}
         />
 
         <LightPollutionLoading
@@ -172,5 +183,77 @@ function MapContent() {
 }
 
 export default function MapPage() {
-  return <MapContent />;
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  // Get URL parameters with fallback defaults
+  const urlDisplayMode = searchParams.get("mode") as DisplayMode;
+  const urlMonth = searchParams.get("month");
+
+  // Validate display mode from URL
+  const validDisplayModes: DisplayMode[] = ["bio", "light", "bio-light"];
+  const displayMode = validDisplayModes.includes(urlDisplayMode)
+    ? urlDisplayMode
+    : "bio";
+
+  // Parse date from URL or use current date
+  const currentDate = useMemo(() => {
+    if (urlMonth && /^\d{4}-\d{2}$/.test(urlMonth)) {
+      const [year, month] = urlMonth.split("-").map(Number);
+      return new Date(year, month - 1, 1);
+    }
+    return new Date();
+  }, [urlMonth]);
+
+  // Helper function to update URL without adding to history
+  const updateURL = useCallback(
+    (newMode?: DisplayMode, newDate?: Date) => {
+      const params = new URLSearchParams(searchParams.toString());
+
+      if (newMode) {
+        params.set("mode", newMode);
+      }
+
+      if (newDate) {
+        const year = newDate.getFullYear();
+        const month = String(newDate.getMonth() + 1).padStart(2, "0");
+        params.set("month", `${year}-${month}`);
+      }
+
+      router.replace(`/map?${params.toString()}`, { scroll: false });
+    },
+    [searchParams, router]
+  );
+
+  // State update handlers that also update URL
+  const handleDisplayModeChange = useCallback(
+    (mode: DisplayMode) => {
+      updateURL(mode, undefined);
+    },
+    [updateURL]
+  );
+
+  const handleDateChange = useCallback(
+    (date: Date) => {
+      updateURL(undefined, date);
+    },
+    [updateURL]
+  );
+
+  // Initialize URL parameters on first load
+  useEffect(() => {
+    const hasParams = searchParams.has("mode") || searchParams.has("month");
+    if (!hasParams) {
+      updateURL(displayMode, currentDate);
+    }
+  }, []); // Only run on mount
+
+  return (
+    <MapContent
+      displayMode={displayMode}
+      currentDate={currentDate}
+      onDisplayModeChange={handleDisplayModeChange}
+      onDateChange={handleDateChange}
+    />
+  );
 }
