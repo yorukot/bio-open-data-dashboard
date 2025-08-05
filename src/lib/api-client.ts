@@ -22,11 +22,12 @@ class APIClient {
 
   private async request<T>(
     endpoint: string,
-    params?: Record<string, any>
+    params?: Record<string, any>,
+    options?: { signal?: AbortSignal }
   ): Promise<T> {
     // Handle both relative and absolute URLs
     const fullPath = `${this.baseURL}${endpoint}`;
-    const url = fullPath.startsWith('http') 
+    const url = fullPath.startsWith("http")
       ? new URL(fullPath)
       : new URL(fullPath, window.location.origin);
 
@@ -39,7 +40,9 @@ class APIClient {
     }
 
     try {
-      const response = await fetch(url.toString());
+      const response = await fetch(url.toString(), {
+        signal: options?.signal,
+      });
 
       if (!response.ok) {
         const errorData: ApiError = await response.json().catch(() => ({
@@ -62,7 +65,10 @@ class APIClient {
     }
   }
 
-  async getLightData(params: LightDataParams): Promise<LightDataResponse> {
+  async getLightData(
+    params: LightDataParams,
+    options?: { signal?: AbortSignal }
+  ): Promise<LightDataResponse> {
     if (!params.start_time || !params.end_time) {
       throw new APIError(
         400,
@@ -98,10 +104,13 @@ class APIClient {
       throw new APIError(400, "offset must be a non-negative integer");
     }
 
-    return this.request<LightDataResponse>("/light-data", params);
+    return this.request<LightDataResponse>("/light-data", params, options);
   }
 
-  async getTBIAData(params: TBIADataParams = {}): Promise<TBIADataResponse> {
+  async getTBIAData(
+    params: TBIADataParams = {},
+    options?: { signal?: AbortSignal }
+  ): Promise<TBIADataResponse> {
     if (params.start_time || params.end_time) {
       const startDate = params.start_time ? new Date(params.start_time) : null;
       const endDate = params.end_time ? new Date(params.end_time) : null;
@@ -135,7 +144,7 @@ class APIClient {
       throw new APIError(400, "offset must be a non-negative integer");
     }
 
-    return this.request<TBIADataResponse>("/tbia-data", params);
+    return this.request<TBIADataResponse>("/tbia-data", params, options);
   }
 }
 
