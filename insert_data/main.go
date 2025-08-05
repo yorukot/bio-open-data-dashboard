@@ -54,7 +54,7 @@ type ProcessingStats struct {
 	ErrorCount int64
 }
 
-var pgsql_url = "x"
+var pgsql_url = ""
 
 var dbPool *sql.DB
 

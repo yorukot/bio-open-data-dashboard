@@ -55,13 +55,16 @@ export async function GET(request: NextRequest) {
 
     let queryText = `
       SELECT 
-        time,
-        longitude,
-        latitude,
-        brightness
-      FROM light_data 
-      WHERE time >= $1 AND time <= $2
-      ORDER BY time ASC
+        bucket as time,
+        grid_longitude as longitude,
+        grid_latitude as latitude,
+        avg_brightness as brightness,
+        point_count,
+        max_brightness,
+        min_brightness
+      FROM light_data_1km_hourly 
+      WHERE bucket >= $1 AND bucket <= $2
+      ORDER BY bucket ASC
     `;
 
     const queryParams: any[] = [startDate, endDate];
@@ -76,8 +79,8 @@ export async function GET(request: NextRequest) {
 
     const countQuery = `
       SELECT COUNT(*) as total
-      FROM light_data 
-      WHERE time >= $1 AND time <= $2
+      FROM light_data_1km_hourly 
+      WHERE bucket >= $1 AND bucket <= $2
     `;
 
     const [dataResult, countResult] = await Promise.all([
