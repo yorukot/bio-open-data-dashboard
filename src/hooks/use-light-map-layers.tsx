@@ -105,19 +105,19 @@ export function useLightMapLayers({
               1,
               "rgba(255,0,0,0.9)",
             ],
-            // Smaller radius at low zoom
+            // Much smaller radius for all zoom levels
             "heatmap-radius": [
               "interpolate",
               ["linear"],
               ["zoom"],
               0,
-              0.5,
+              0.3,
               4,
-              2,
+              1,
               8,
-              4,
-              22,
-              24,
+              3,
+              12,
+              5,
             ],
             // Moderate opacity
             "heatmap-opacity": 0.7,
