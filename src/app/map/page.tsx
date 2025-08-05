@@ -11,6 +11,7 @@ import { convertTBIADataToGeoJSON } from "@/lib/utils/geojson";
 import { convertLightDataToGeoJSON } from "@/lib/utils/light-geojson";
 import { useAnimalMapLayers } from "@/hooks/use-animal-map-layers";
 import { useLightMapLayers } from "@/hooks/use-light-map-layers";
+import { LightPollutionLoading } from "@/components/light-pollution-loading";
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN!;
 
@@ -158,25 +159,13 @@ function MapContent() {
           onDateChange={setCurrentDate}
         />
 
-        {/* Light pollution loading indicator */}
-        {(displayMode === "light" || displayMode === "bio-light") &&
-          lightLoading && (
-            <div className="absolute top-4 right-4 bg-black/80 text-white px-4 py-2 rounded-lg">
-              <div className="flex items-center space-x-2">
-                <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
-                <span className="text-sm">
-                  載入光污染數據：{lightProgress.loaded.toLocaleString()}
-                  {lightProgress.total &&
-                    ` / ${lightProgress.total.toLocaleString()}`}
-                  {lightProgress.total &&
-                    ` (${(
-                      (lightProgress.loaded / lightProgress.total) *
-                      100
-                    ).toFixed(1)}%)`}
-                </span>
-              </div>
-            </div>
-          )}
+        <LightPollutionLoading
+          isVisible={
+            (displayMode === "light" || displayMode === "bio-light") &&
+            lightLoading
+          }
+          progress={lightProgress}
+        />
       </div>
     </main>
   );
