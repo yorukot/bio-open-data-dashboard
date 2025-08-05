@@ -77,7 +77,7 @@ function MapContent({
       ...dateRange,
     },
     enabled: displayMode === "light" || displayMode === "bio-light",
-    batchSize: 5000, // Fetch 5000 records per batch
+    batchSize: 100000,
   });
 
   // Debug logging

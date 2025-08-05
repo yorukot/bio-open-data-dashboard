@@ -25,7 +25,7 @@ interface ProgressiveLightDataResult {
 export function useProgressiveLightData({
   params,
   enabled = true,
-  batchSize = 5000,
+  batchSize = 20000,
 }: UseProgressiveLightDataProps): ProgressiveLightDataResult {
   const [data, setData] = useState<LightDataRecord[]>([]);
   const [isLoading, setIsLoading] = useState(false);
