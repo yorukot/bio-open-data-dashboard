@@ -66,55 +66,61 @@ export function useLightMapLayers({
             visibility: visibility,
           },
           paint: {
-            // Simple weight - every point has weight 1
-            "heatmap-weight": 1,
-            // Very high intensity to make it extremely visible
-            "heatmap-intensity": 20,
-            // Simple color gradient
+            // Use brightness property as weight if available, otherwise default to 1
+            "heatmap-weight": [
+              "case",
+              ["has", "brightness"],
+              ["get", "brightness"],
+              1,
+            ],
+            // Very low intensity at far zoom, increases with zoom
+            "heatmap-intensity": [
+              "interpolate",
+              ["linear"],
+              ["zoom"],
+              0,
+              0.3,
+              4,
+              0.8,
+              8,
+              1.5,
+              12,
+              2.5,
+            ],
+            // Light pollution color gradient (blue to red)
             "heatmap-color": [
               "interpolate",
               ["linear"],
               ["heatmap-density"],
               0,
-              "rgba(0,0,255,0)",
-              0.1,
-              "rgba(0,0,255,0.5)",
-              0.3,
-              "rgba(0,255,0,0.7)",
-              0.5,
-              "rgba(255,255,0,0.8)",
-              0.7,
-              "rgba(255,165,0,0.9)",
+              "rgba(0,0,0,0)",
+              0.2,
+              "rgba(0,0,255,0.3)",
+              0.4,
+              "rgba(0,255,255,0.5)",
+              0.6,
+              "rgba(255,255,0,0.7)",
+              0.8,
+              "rgba(255,165,0,0.8)",
               1,
-              "rgba(255,0,0,1)",
+              "rgba(255,0,0,0.9)",
             ],
-            // Very large radius to make it extremely visible
-            "heatmap-radius": 100,
-            // Full opacity
-            "heatmap-opacity": 1,
-          },
-        },
-        beforeLayer
-      );
-
-      // Add circle layer for higher zoom levels - simplified for debugging
-      map.addLayer(
-        {
-          id: "light-pollution-points",
-          type: "circle",
-          source: "light-pollution",
-          layout: {
-            visibility: visibility,
-          },
-          paint: {
-            // Simple fixed size
-            "circle-radius": 8,
-            // Bright red color to make it very visible
-            "circle-color": "red",
-            "circle-stroke-color": "white",
-            "circle-stroke-width": 2,
-            // Full opacity
-            "circle-opacity": 1,
+            // Smaller radius at low zoom
+            "heatmap-radius": [
+              "interpolate",
+              ["linear"],
+              ["zoom"],
+              0,
+              0.5,
+              4,
+              2,
+              8,
+              4,
+              22,
+              24,
+            ],
+            // Moderate opacity
+            "heatmap-opacity": 0.7,
           },
         },
         beforeLayer
@@ -166,14 +172,10 @@ export function useLightMapLayers({
       }
 
       // Debug layer existence
-      console.log("Light pollution layers added:");
+      console.log("Light pollution heatmap layer added:");
       console.log(
         "- Heatmap layer exists:",
         !!map.getLayer("light-pollution-heatmap")
-      );
-      console.log(
-        "- Points layer exists:",
-        !!map.getLayer("light-pollution-points")
       );
       console.log("- Source exists:", !!map.getSource("light-pollution"));
 
@@ -184,15 +186,9 @@ export function useLightMapLayers({
           map.getLayoutProperty("light-pollution-heatmap", "visibility")
         );
       }
-      if (map.getLayer("light-pollution-points")) {
-        console.log(
-          "- Points visibility:",
-          map.getLayoutProperty("light-pollution-points", "visibility")
-        );
-      }
 
       console.log(
-        "Light pollution layers created with visibility:",
+        "Light pollution heatmap created with visibility:",
         visibility
       );
       console.log("Display mode:", displayMode);
@@ -208,8 +204,6 @@ export function useLightMapLayers({
     return () => {
       map.off("load", addLightLayers);
       if (map.getSource("light-pollution")) {
-        if (map.getLayer("light-pollution-points"))
-          map.removeLayer("light-pollution-points");
         if (map.getLayer("light-pollution-heatmap"))
           map.removeLayer("light-pollution-heatmap");
         map.removeSource("light-pollution");
@@ -226,18 +220,11 @@ export function useLightMapLayers({
         ? "visible"
         : "none";
 
-      console.log("Setting light pollution layer visibility:", visibility);
+      console.log("Setting light pollution heatmap visibility:", visibility);
 
       if (map.getLayer("light-pollution-heatmap")) {
         map.setLayoutProperty(
           "light-pollution-heatmap",
-          "visibility",
-          visibility
-        );
-      }
-      if (map.getLayer("light-pollution-points")) {
-        map.setLayoutProperty(
-          "light-pollution-points",
           "visibility",
           visibility
         );
