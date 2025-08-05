@@ -6,8 +6,11 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { useSidebar } from "@/components/ui/sidebar";
 import { MapControlPanel, DisplayMode } from "@/components/map-control-panel";
 import { useTBIAData } from "@/lib/hooks/use-api";
+import { useProgressiveLightData } from "@/hooks/use-progressive-light-data";
 import { convertTBIADataToGeoJSON } from "@/lib/utils/geojson";
+import { convertLightDataToGeoJSON } from "@/lib/utils/light-geojson";
 import { useAnimalMapLayers } from "@/hooks/use-animal-map-layers";
+import { useLightMapLayers } from "@/hooks/use-light-map-layers";
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN!;
 
@@ -29,32 +32,68 @@ function MapContent() {
   }, [currentDate]);
 
   // Fetch animal data for the selected month
-  const { data: animalData, error } = useTBIAData({
+  const { data: animalData, error: animalError } = useTBIAData({
     ...dateRange,
     limit: 1000, // Reasonable limit for map performance
   }, {
     enabled: displayMode === "bio" || displayMode === "bio-light"
   });
 
+  // Fetch light pollution data progressively for the selected month
+  const { 
+    data: lightDataRecords, 
+    error: lightError, 
+    isLoading: lightLoading,
+    progress: lightProgress
+  } = useProgressiveLightData({
+    params: {
+      ...dateRange,
+    },
+    enabled: displayMode === "light" || displayMode === "bio-light",
+    batchSize: 5000 // Fetch 5000 records per batch
+  });
+
   // Debug logging
   useEffect(() => {
-    if (error) {
-      console.error('TBIA API Error:', error);
+    if (animalError) {
+      console.error('TBIA API Error:', animalError);
     }
     if (animalData) {
       console.log('TBIA data loaded:', animalData.data?.length, 'records');
     }
-  }, [animalData, error]);
+  }, [animalData, animalError]);
+
+  useEffect(() => {
+    if (lightError) {
+      console.error('Light API Error:', lightError);
+    }
+    if (lightDataRecords.length > 0) {
+      console.log('Light data loaded:', lightDataRecords.length, 'records');
+      console.log('Progress:', lightProgress.loaded, '/', lightProgress.total, 
+                  `(${lightProgress.total ? ((lightProgress.loaded / lightProgress.total) * 100).toFixed(1) : 0}%)`);
+    }
+  }, [lightDataRecords, lightError, lightProgress]);
 
   // Convert TBIA data to GeoJSON format
   const animalGeoJSON = React.useMemo(() => {
     return convertTBIADataToGeoJSON(animalData?.data || []);
   }, [animalData]);
 
-  // Use custom hook for map layer management
+  // Convert light data to GeoJSON format
+  const lightGeoJSON = React.useMemo(() => {
+    return convertLightDataToGeoJSON(lightDataRecords);
+  }, [lightDataRecords]);
+
+  // Use custom hooks for map layer management
   useAnimalMapLayers({
     map: mapRef.current?.getMap() || null,
     geoJSON: animalGeoJSON,
+    displayMode
+  });
+
+  useLightMapLayers({
+    map: mapRef.current?.getMap() || null,
+    geoJSON: lightGeoJSON,
     displayMode
   });
 
@@ -94,6 +133,20 @@ function MapContent() {
           currentDate={currentDate}
           onDateChange={setCurrentDate}
         />
+        
+        {/* Light pollution loading indicator */}
+        {(displayMode === "light" || displayMode === "bio-light") && lightLoading && (
+          <div className="absolute top-4 right-4 bg-black/80 text-white px-4 py-2 rounded-lg">
+            <div className="flex items-center space-x-2">
+              <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+              <span className="text-sm">
+                載入光污染數據: {lightProgress.loaded.toLocaleString()}
+                {lightProgress.total && ` / ${lightProgress.total.toLocaleString()}`}
+                {lightProgress.total && ` (${((lightProgress.loaded / lightProgress.total) * 100).toFixed(1)}%)`}
+              </span>
+            </div>
+          </div>
+        )}
       </div>
     </main>
   );
