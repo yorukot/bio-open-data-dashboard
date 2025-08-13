@@ -112,6 +112,788 @@
         }
       }
     },
+    "/api/charts/night-animals/area-amount": {
+      "get": {
+        "summary": "Get night animals area amount data",
+        "description": "Retrieve aggregated animal data by area (county) within a time range",
+        "tags": ["Charts", "Night Animals"],
+        "parameters": [
+          {
+            "name": "start_time",
+            "in": "query",
+            "required": true,
+            "description": "Start time for data retrieval (ISO 8601 format)",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2024-01-01T00:00:00Z"
+            }
+          },
+          {
+            "name": "end_time",
+            "in": "query",
+            "required": true,
+            "description": "End time for data retrieval (ISO 8601 format)",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2024-12-31T23:59:59Z"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved night animals area amount data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/CountyAnimalData"
+                      }
+                    },
+                    "time_range": {
+                      "$ref": "#/components/schemas/TimeRange"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/charts/night-animals/area-ratio": {
+      "get": {
+        "summary": "Get night animals area ratio data",
+        "description": "Retrieve aggregated animal ratio data by area (county) within a time range",
+        "tags": ["Charts", "Night Animals"],
+        "parameters": [
+          {
+            "name": "start_time",
+            "in": "query",
+            "required": true,
+            "description": "Start time for data retrieval (ISO 8601 format)",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2024-01-01T00:00:00Z"
+            }
+          },
+          {
+            "name": "end_time",
+            "in": "query",
+            "required": true,
+            "description": "End time for data retrieval (ISO 8601 format)",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2024-12-31T23:59:59Z"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved night animals area ratio data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/CountyAnimalData"
+                      }
+                    },
+                    "time_range": {
+                      "$ref": "#/components/schemas/TimeRange"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/charts/night-animals/county-total": {
+      "get": {
+        "summary": "Get county total data by month",
+        "description": "Retrieve total animal amounts by county for a specific month",
+        "tags": ["Charts", "Night Animals"],
+        "parameters": [
+          {
+            "name": "month",
+            "in": "query",
+            "required": true,
+            "description": "Month number (1-12)",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 12,
+              "example": 6
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved county total data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/CountyTotalData"
+                      }
+                    },
+                    "month": {
+                      "type": "integer",
+                      "description": "The requested month"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/charts/night-animals/dataset-stats": {
+      "get": {
+        "summary": "Get dataset statistics",
+        "description": "Retrieve aggregated statistics by dataset, optionally filtered by county",
+        "tags": ["Charts", "Night Animals"],
+        "parameters": [
+          {
+            "name": "county",
+            "in": "query",
+            "required": false,
+            "description": "Filter by county (use 'all' for all counties)",
+            "schema": {
+              "type": "string",
+              "example": "臺北市"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved dataset statistics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/DatasetStatsData"
+                      }
+                    },
+                    "county": {
+                      "type": "string",
+                      "description": "The applied county filter"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/charts/night-animals/species-timeline": {
+      "get": {
+        "summary": "Get species timeline data",
+        "description": "Retrieve monthly event counts for a specific animal type and year",
+        "tags": ["Charts", "Night Animals"],
+        "parameters": [
+          {
+            "name": "animal_type",
+            "in": "query",
+            "required": true,
+            "description": "Type of animal to retrieve data for",
+            "schema": {
+              "type": "string",
+              "example": "鳥類"
+            }
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "required": true,
+            "description": "Year to retrieve data for",
+            "schema": {
+              "type": "integer",
+              "example": 2024
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved species timeline data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MonthlyData"
+                      }
+                    },
+                    "animal_type": {
+                      "type": "string",
+                      "description": "The requested animal type"
+                    },
+                    "year": {
+                      "type": "integer",
+                      "description": "The requested year"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/charts/season/animal-amount": {
+      "get": {
+        "summary": "Get seasonal animal amount data",
+        "description": "Retrieve animal amounts by season, year, and optionally county",
+        "tags": ["Charts", "Season"],
+        "parameters": [
+          {
+            "name": "year",
+            "in": "query",
+            "required": true,
+            "description": "Year to retrieve data for",
+            "schema": {
+              "type": "integer",
+              "example": 2024
+            }
+          },
+          {
+            "name": "season",
+            "in": "query",
+            "required": true,
+            "description": "Season number (1-4)",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 4,
+              "example": 2
+            }
+          },
+          {
+            "name": "county",
+            "in": "query",
+            "required": false,
+            "description": "Filter by county (use 'all' for all counties)",
+            "schema": {
+              "type": "string",
+              "example": "臺北市"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved seasonal animal amount data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/CountyAnimalData"
+                      }
+                    },
+                    "year": {
+                      "type": "integer",
+                      "description": "The requested year"
+                    },
+                    "season": {
+                      "type": "integer",
+                      "description": "The requested season"
+                    },
+                    "county": {
+                      "type": "string",
+                      "description": "The applied county filter"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/charts/season/animal-ratio": {
+      "get": {
+        "summary": "Get seasonal animal ratio data",
+        "description": "Retrieve animal ratio data by season, year, and optionally county",
+        "tags": ["Charts", "Season"],
+        "parameters": [
+          {
+            "name": "year",
+            "in": "query",
+            "required": true,
+            "description": "Year to retrieve data for",
+            "schema": {
+              "type": "integer",
+              "example": 2024
+            }
+          },
+          {
+            "name": "season",
+            "in": "query",
+            "required": true,
+            "description": "Season number (1-4)",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 4,
+              "example": 2
+            }
+          },
+          {
+            "name": "county",
+            "in": "query",
+            "required": false,
+            "description": "Filter by county (use 'all' for all counties)",
+            "schema": {
+              "type": "string",
+              "example": "臺北市"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved seasonal animal ratio data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/CountyAnimalData"
+                      }
+                    },
+                    "year": {
+                      "type": "integer",
+                      "description": "The requested year"
+                    },
+                    "season": {
+                      "type": "integer",
+                      "description": "The requested season"
+                    },
+                    "county": {
+                      "type": "string",
+                      "description": "The applied county filter"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/charts/light-pollution/distribution": {
+      "get": {
+        "summary": "Get light pollution distribution by county and month",
+        "description": "Retrieve average light pollution data grouped by county and month within a time range",
+        "tags": ["Charts", "Light Pollution"],
+        "parameters": [
+          {
+            "name": "start_time",
+            "in": "query",
+            "required": true,
+            "description": "Start time for data retrieval (ISO 8601 format)",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2024-01-01T00:00:00Z"
+            }
+          },
+          {
+            "name": "end_time",
+            "in": "query",
+            "required": true,
+            "description": "End time for data retrieval (ISO 8601 format)",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2024-12-31T23:59:59Z"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved light pollution distribution data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/CountyLightData"
+                      }
+                    },
+                    "time_range": {
+                      "$ref": "#/components/schemas/TimeRange"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/charts/light-pollution/timeline": {
+      "get": {
+        "summary": "Get light pollution timeline for a specific county",
+        "description": "Retrieve monthly light pollution averages for a specific county and year",
+        "tags": ["Charts", "Light Pollution"],
+        "parameters": [
+          {
+            "name": "county",
+            "in": "query",
+            "required": true,
+            "description": "County name (URL encoded for Chinese characters)",
+            "schema": {
+              "type": "string",
+              "example": "新北市"
+            }
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "required": true,
+            "description": "Year to retrieve data for",
+            "schema": {
+              "type": "integer",
+              "minimum": 1900,
+              "maximum": 2100,
+              "example": 2024
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved light pollution timeline data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "county": {
+                      "type": "string",
+                      "description": "The requested county"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MonthlyLightData"
+                      }
+                    },
+                    "year": {
+                      "type": "integer",
+                      "description": "The requested year"
+                    },
+                    "total_months": {
+                      "type": "integer",
+                      "description": "Number of months with available data"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/charts/light-pollution/source-ratio": {
+      "get": {
+        "summary": "Get light pollution by Taiwan regions",
+        "description": "Retrieve average light pollution data for Taiwan's four regions (北區/中區/南區/東區) by month",
+        "tags": ["Charts", "Light Pollution"],
+        "parameters": [
+          {
+            "name": "month",
+            "in": "query",
+            "required": true,
+            "description": "Month number (1-12)",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 12,
+              "example": 6
+            }
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "required": false,
+            "description": "Optional year filter",
+            "schema": {
+              "type": "integer",
+              "minimum": 1900,
+              "maximum": 2100,
+              "example": 2024
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved regional light pollution data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/AreaLightData"
+                      }
+                    },
+                    "month": {
+                      "type": "integer",
+                      "description": "The requested month"
+                    },
+                    "year": {
+                      "type": "integer",
+                      "nullable": true,
+                      "description": "The requested year (if provided)"
+                    },
+                    "total_regions": {
+                      "type": "integer",
+                      "description": "Number of regions returned"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/tbia-data": {
       "get": {
         "summary": "Get TBIA biodiversity data",
@@ -466,6 +1248,155 @@
         },
         "required": ["time_range"]
       },
+      "CountyAnimalData": {
+        "type": "object",
+        "properties": {
+          "county": {
+            "type": "string",
+            "description": "County name"
+          },
+          "animals": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "animal_type": {
+                  "type": "string",
+                  "description": "Type of animal"
+                },
+                "total_amount": {
+                  "type": "integer",
+                  "description": "Total amount of animals observed"
+                },
+                "event_count": {
+                  "type": "integer",
+                  "description": "Number of observation events"
+                }
+              },
+              "required": ["animal_type", "total_amount", "event_count"]
+            }
+          }
+        },
+        "required": ["county", "animals"]
+      },
+      "CountyTotalData": {
+        "type": "object",
+        "properties": {
+          "county": {
+            "type": "string",
+            "description": "County name"
+          },
+          "total_amount": {
+            "type": "integer",
+            "description": "Total amount of animals observed"
+          }
+        },
+        "required": ["county", "total_amount"]
+      },
+      "DatasetStatsData": {
+        "type": "object",
+        "properties": {
+          "dataset": {
+            "type": "string",
+            "description": "Dataset name"
+          },
+          "count": {
+            "type": "integer",
+            "description": "Number of records in the dataset"
+          }
+        },
+        "required": ["dataset", "count"]
+      },
+      "MonthlyData": {
+        "type": "object",
+        "properties": {
+          "month": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 12,
+            "description": "Month number (1-12)"
+          },
+          "event_count": {
+            "type": "integer",
+            "description": "Number of events in the month"
+          }
+        },
+        "required": ["month", "event_count"]
+      },
+      "CountyLightData": {
+        "type": "object",
+        "properties": {
+          "county": {
+            "type": "string",
+            "description": "County name"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MonthlyLightData"
+            }
+          }
+        },
+        "required": ["county", "data"],
+        "example": {
+          "county": "新北市",
+          "data": [
+            {
+              "month": 1,
+              "light_pollution_average": 6.70
+            },
+            {
+              "month": 2,
+              "light_pollution_average": 6.85
+            },
+            {
+              "month": 3,
+              "light_pollution_average": 6.21
+            }
+          ]
+        }
+      },
+      "MonthlyLightData": {
+        "type": "object",
+        "properties": {
+          "month": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 12,
+            "description": "Month number (1-12)"
+          },
+          "light_pollution_average": {
+            "type": "number",
+            "format": "double",
+            "description": "Average light pollution value for the month"
+          }
+        },
+        "required": ["month", "light_pollution_average"],
+        "example": {
+          "month": 6,
+          "light_pollution_average": 3.96
+        }
+      },
+      "AreaLightData": {
+        "type": "object",
+        "properties": {
+          "area": {
+            "type": "string",
+            "description": "Taiwan region name",
+            "enum": ["北區", "中區", "南區", "東區"]
+          },
+          "light_pollution_average": {
+            "type": "number",
+            "format": "double",
+            "description": "Average light pollution value for the region"
+          }
+        },
+        "required": ["area", "light_pollution_average"],
+        "example": {
+          "area": "北區",
+          "light_pollution_average": 13.65
+        }
+      },
       "Error": {
         "type": "object",
         "properties": {
@@ -486,6 +1417,22 @@
     {
       "name": "TBIA Data",
       "description": "Taiwan Biodiversity Information dataset"
+    },
+    {
+      "name": "Charts",
+      "description": "Chart and visualization data endpoints"
+    },
+    {
+      "name": "Night Animals",
+      "description": "Night animals chart data endpoints"
+    },
+    {
+      "name": "Light Pollution",
+      "description": "Light pollution chart data endpoints"
+    },
+    {
+      "name": "Season",
+      "description": "Seasonal chart data endpoints"
     }
   ]
 }

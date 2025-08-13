@@ -1,4 +1,72 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
 # Bio Open Data Dashboard - Development Guidelines
+
+## Development Commands
+
+### Core Development
+```bash
+# Start development server (uses Turbopack)
+pnpm dev
+
+# Build for production
+pnpm build
+pnpm start
+
+# Code quality
+pnpm lint
+```
+
+### Database Setup
+```bash
+# Start TimescaleDB with Docker
+docker-compose up -d
+
+# Data insertion (Go scripts)
+cd insert_data
+go run main.go migrate.go data_schema.go
+```
+
+## Architecture Overview
+
+### Tech Stack
+- **Next.js 15.4.4** with App Router and React 19
+- **TypeScript** with strict mode
+- **TanStack Query v5** for API state management
+- **Mapbox GL** with react-map-gl for interactive mapping
+- **Tailwind CSS 4** with shadcn/ui components
+- **PostgreSQL + TimescaleDB** for time-series data
+
+### Project Structure
+```
+/src
+├── app/                    # Next.js App Router pages
+│   ├── api/               # API route handlers
+│   ├── map/               # Interactive map page
+│   ├── statistics/        # Analytics dashboard
+│   └── leaderboard/       # Data ranking page
+├── components/            # Reusable UI components
+├── hooks/                 # Custom React hooks
+└── lib/                   # Utilities and configurations
+    ├── api-client.ts      # Centralized API client
+    ├── hooks/             # API-specific hooks
+    └── types/             # TypeScript definitions
+```
+
+### Data Sources
+1. **Light Pollution Data**: TimescaleDB time-series (2016-2025)
+2. **TBIA Biodiversity Data**: Species data with location/temporal info
+
+### Progressive Data Loading
+Large datasets use progressive loading with render milestones:
+```typescript
+const { data, progress } = useProgressiveLightData({
+  params: { start_time, end_time },
+  batchSize: 100000, // Default batch size
+});
+```
 
 ## Page Structure & Styling Conventions
 

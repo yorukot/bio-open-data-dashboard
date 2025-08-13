@@ -20,7 +20,16 @@ type LightData struct {
 	Time       time.Time `json:"-"`
 	Longitude  float64   `json:"-"`
 	Latitude   float64   `json:"-"`
-	Brightness float64   `json:"-"`
+	Brightness *float64  `json:"-"`  // Pointer to handle NaN values
+	County     *string   `json:"-"`  // Pointer to handle null values
+}
+
+type LightDataWithCounty struct {
+	Time       string      `json:"time"`
+	Longitude  float64     `json:"longitude"`
+	Latitude   float64     `json:"latitude"`
+	Brightness interface{} `json:"brightness"` // Can be float64 or NaN
+	County     interface{} `json:"county"`     // Can be string or NaN
 }
 
 type BiologicalData struct {
@@ -55,26 +64,11 @@ type ProcessingStats struct {
 }
 
 var pgsql_url = ""
-
 var dbPool *sql.DB
 
 func createTable(db *sql.DB) error {
-	query := `
-	CREATE TABLE IF NOT EXISTS light_data (
-		time TIMESTAMPTZ NOT NULL,
-		longitude DOUBLE PRECISION NOT NULL,
-		latitude DOUBLE PRECISION NOT NULL,
-		brightness DOUBLE PRECISION NOT NULL
-	);
-
-	SELECT create_hypertable('light_data', 'time', if_not_exists => TRUE);
-
-	CREATE INDEX IF NOT EXISTS idx_light_data_location ON light_data (longitude, latitude);
-	CREATE INDEX IF NOT EXISTS idx_light_data_brightness ON light_data (brightness);
-	`
-
-	_, err := db.Exec(query)
-	return err
+	// Use the new schema function instead
+	return createLightDataWithCountyTable(db)
 }
 
 func createBiologicalTable(db *sql.DB) error {
@@ -203,8 +197,16 @@ func insertBatch(db *sql.DB, batch [][]float64, timestamp time.Time) error {
 			continue
 		}
 		
-		valueStrings = append(valueStrings, fmt.Sprintf("($%d, $%d, $%d, $%d)", argIndex, argIndex+1, argIndex+2, argIndex+3))
-		valueArgs = append(valueArgs, timestamp, record[0], record[1], record[2])
+		// Handle NaN values for brightness
+		var brightness interface{}
+		if record[2] != record[2] { // NaN check (NaN != NaN is true)
+			brightness = nil
+		} else {
+			brightness = record[2]
+		}
+		
+		valueStrings = append(valueStrings, fmt.Sprintf("($%d, $%d, $%d, $%d, NULL)", argIndex, argIndex+1, argIndex+2, argIndex+3))
+		valueArgs = append(valueArgs, timestamp, record[0], record[1], brightness)
 		argIndex += 4
 	}
 	
@@ -212,7 +214,7 @@ func insertBatch(db *sql.DB, batch [][]float64, timestamp time.Time) error {
 		return nil
 	}
 
-	query := fmt.Sprintf("INSERT INTO light_data (time, longitude, latitude, brightness) VALUES %s", strings.Join(valueStrings, ","))
+	query := fmt.Sprintf("INSERT INTO light_data_with_county (time, longitude, latitude, brightness, county) VALUES %s", strings.Join(valueStrings, ","))
 	
 	_, err = tx.Exec(query, valueArgs...)
 	if err != nil {
@@ -573,6 +575,7 @@ func main() {
 	// Parse command line arguments
 	processBiological := false
 	runMigrationMode := false
+	process2025Full := false
 	
 	if len(os.Args) > 1 {
 		switch os.Args[1] {
@@ -582,20 +585,25 @@ func main() {
 		case "migrate":
 			runMigrationMode = true
 			log.Println("Mode: Migrating existing data to aggregated tables")
+		case "2025_full":
+			process2025Full = true
+			log.Println("Mode: Processing 2025 full light data from taiwan_light_2025_full.json")
 		default:
 			log.Println("Unknown argument:", os.Args[1])
-			log.Println("Usage: go run main.go [final_dataset|migrate]")
+			log.Println("Usage: go run main.go [final_dataset|migrate|2025_full]")
 			log.Println("  - No arguments: Process light pollution data")
 			log.Println("  - final_dataset: Process TBIA biological data")
 			log.Println("  - migrate: Migrate existing biological data to aggregated tables")
+			log.Println("  - 2025_full: Process taiwan_light_2025_full.json file")
 			return
 		}
 	} else {
 		log.Println("Mode: Processing light pollution data (default)")
-		log.Println("Usage: go run main.go [final_dataset|migrate]")
+		log.Println("Usage: go run main.go [final_dataset|migrate|2025_full]")
 		log.Println("  - No arguments: Process light pollution data")
 		log.Println("  - final_dataset: Process TBIA biological data")
 		log.Println("  - migrate: Migrate existing biological data to aggregated tables")
+		log.Println("  - 2025_full: Process taiwan_light_2025_full.json file")
 	}
 
 	var err error
@@ -648,6 +656,23 @@ func main() {
 		
 		duration := time.Since(startTime)
 		log.Printf("Biological data import completed successfully in %v", duration)
+	} else if process2025Full {
+		// Create light data table with county
+		if err := createTable(dbPool); err != nil {
+			log.Fatalf("Error creating light table with county: %v", err)
+		}
+		log.Println("Light table with county created successfully")
+
+		filePath := "../light_taiwan/taiwan_light_2016_full.json"
+		log.Printf("Starting 2025 full light data processing")
+		startTime := time.Now()
+		
+		if err := processFull2025LightData(filePath); err != nil {
+			log.Fatalf("Error processing 2025 full light data: %v", err)
+		}
+		
+		duration := time.Since(startTime)
+		log.Printf("2025 full light data import completed successfully in %v", duration)
 	} else {
 		// Create light data table
 		if err := createTable(dbPool); err != nil {
@@ -666,4 +691,115 @@ func main() {
 		duration := time.Since(startTime)
 		log.Printf("Light data import completed successfully in %v", duration)
 	}
+}
+
+// processFull2025LightData processes the taiwan_light_2025_full.json file
+func processFull2025LightData(filePath string) error {
+	log.Printf("Processing full 2025 light data file: %s", filePath)
+	
+	file, err := os.Open(filePath)
+	if err != nil {
+		return fmt.Errorf("error opening file: %v", err)
+	}
+	defer file.Close()
+	
+	// Read and preprocess JSON to handle NaN values
+	content, err := os.ReadFile(filePath)
+	if err != nil {
+		return fmt.Errorf("error reading file: %v", err)
+	}
+	
+	// Replace NaN with null so JSON parser can handle it
+	processedContent := strings.ReplaceAll(string(content), "NaN", "null")
+	
+	// Parse JSON
+	var lightData []LightDataWithCounty
+	if err := json.Unmarshal([]byte(processedContent), &lightData); err != nil {
+		return fmt.Errorf("error parsing JSON: %v", err)
+	}
+	
+	log.Printf("Loaded %d light data records from JSON", len(lightData))
+	
+	// Insert data in batches
+	const batchSize = 5000
+	totalRecords := len(lightData)
+	
+	for i := 0; i < totalRecords; i += batchSize {
+		end := i + batchSize
+		if end > totalRecords {
+			end = totalRecords
+		}
+		
+		batch := lightData[i:end]
+		if err := insertLightDataWithCountyBatch(dbPool, batch); err != nil {
+			return fmt.Errorf("error inserting batch starting at %d: %v", i, err)
+		}
+		
+		if (i+batchSize)%10000 == 0 || end == totalRecords {
+			log.Printf("Inserted %d/%d records", end, totalRecords)
+		}
+	}
+	
+	log.Printf("Successfully processed all %d records from %s", totalRecords, filePath)
+	return nil
+}
+
+// insertLightDataWithCountyBatch inserts a batch of LightDataWithCounty records
+func insertLightDataWithCountyBatch(db *sql.DB, batch []LightDataWithCounty) error {
+	if len(batch) == 0 {
+		return nil
+	}
+
+	tx, err := db.Begin()
+	if err != nil {
+		return fmt.Errorf("error starting transaction: %v", err)
+	}
+	defer tx.Rollback()
+
+	// Build bulk insert query
+	valueStrings := make([]string, 0, len(batch))
+	valueArgs := make([]interface{}, 0, len(batch)*5)
+	
+	argIndex := 1
+	for _, record := range batch {
+		// Parse time
+		parsedTime, err := time.Parse(time.RFC3339, record.Time)
+		if err != nil {
+			log.Printf("Warning: skipping record with invalid time format: %s", record.Time)
+			continue
+		}
+		
+		// Get brightness value
+		brightnessFloat, ok := record.Brightness.(float64)
+		if !ok {
+			continue // Skip records with invalid brightness values
+		}
+		
+		// Skip records with NaN county (null values after preprocessing)
+		if record.County == nil {
+			continue // Ignore records with NaN county
+		}
+		
+		countyStr, ok := record.County.(string)
+		if !ok {
+			continue // Ignore records with invalid county values
+		}
+		
+		valueStrings = append(valueStrings, fmt.Sprintf("($%d, $%d, $%d, $%d, $%d)", argIndex, argIndex+1, argIndex+2, argIndex+3, argIndex+4))
+		valueArgs = append(valueArgs, parsedTime, record.Longitude, record.Latitude, brightnessFloat, countyStr)
+		argIndex += 5
+	}
+	
+	if len(valueStrings) == 0 {
+		return nil
+	}
+
+	query := fmt.Sprintf("INSERT INTO light_data_with_county (time, longitude, latitude, brightness, county) VALUES %s", strings.Join(valueStrings, ","))
+	
+	_, err = tx.Exec(query, valueArgs...)
+	if err != nil {
+		return fmt.Errorf("error executing batch insert: %v", err)
+	}
+
+	return tx.Commit()
 }
