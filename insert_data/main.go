@@ -572,14 +572,30 @@ func processAllFilesConcurrently(dataDir string, numWorkers int) error {
 func main() {
 	// Parse command line arguments
 	processBiological := false
-	if len(os.Args) > 1 && os.Args[1] == "final_dataset" {
-		processBiological = true
-		log.Println("Mode: Processing biological data from TBIA_final_dataset")
+	runMigrationMode := false
+	
+	if len(os.Args) > 1 {
+		switch os.Args[1] {
+		case "final_dataset":
+			processBiological = true
+			log.Println("Mode: Processing biological data from TBIA_final_dataset")
+		case "migrate":
+			runMigrationMode = true
+			log.Println("Mode: Migrating existing data to aggregated tables")
+		default:
+			log.Println("Unknown argument:", os.Args[1])
+			log.Println("Usage: go run main.go [final_dataset|migrate]")
+			log.Println("  - No arguments: Process light pollution data")
+			log.Println("  - final_dataset: Process TBIA biological data")
+			log.Println("  - migrate: Migrate existing biological data to aggregated tables")
+			return
+		}
 	} else {
 		log.Println("Mode: Processing light pollution data (default)")
-		log.Println("Usage: go run main.go [final_dataset]")
+		log.Println("Usage: go run main.go [final_dataset|migrate]")
 		log.Println("  - No arguments: Process light pollution data")
 		log.Println("  - final_dataset: Process TBIA biological data")
+		log.Println("  - migrate: Migrate existing biological data to aggregated tables")
 	}
 
 	var err error
@@ -599,7 +615,23 @@ func main() {
 	var dataDir string
 	numWorkers := 16
 
-	if processBiological {
+	if runMigrationMode {
+		// Run migration process
+		log.Println("Starting data migration to aggregated tables...")
+		startTime := time.Now()
+		
+		if err := runMigration(dbPool); err != nil {
+			log.Fatalf("Migration failed: %v", err)
+		}
+		
+		if err := migrationHealthCheck(dbPool); err != nil {
+			log.Printf("Health check completed with warnings: %v", err)
+		}
+		
+		duration := time.Since(startTime)
+		log.Printf("Migration completed successfully in %v", duration)
+		return
+	} else if processBiological {
 		// Create biological table
 		if err := createBiologicalTable(dbPool); err != nil {
 			log.Fatalf("Error creating biological table: %v", err)

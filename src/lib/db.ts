@@ -1,4 +1,5 @@
 import { Pool } from 'pg';
+import { DatabaseParams } from './types/database';
 
 let pool: Pool | null = null;
 
@@ -14,7 +15,7 @@ export function getPool(): Pool {
   return pool;
 }
 
-export async function query(text: string, params?: any[]) {
+export async function query(text: string, params?: DatabaseParams) {
   const pool = getPool();
   const client = await pool.connect();
   try {
