@@ -1,9 +1,10 @@
+import { isValidYear } from "./config/time-range";
 import {
-  LightDataParams,
-  TBIADataParams,
-  LightDataResponse,
-  TBIADataResponse,
   ApiError,
+  LightDataParams,
+  LightDataResponse,
+  TBIADataParams,
+  TBIADataResponse,
 } from "./types/api";
 
 class APIError extends Error {
@@ -150,7 +151,13 @@ class APIClient {
   async getLightPollutionDistribution(
     params: { start_time: string; end_time: string },
     options?: { signal?: AbortSignal }
-  ): Promise<{ data: Array<{ county: string; data: Array<{ month: number; light_pollution_average: number }> }>; time_range: { start: string; end: string } }> {
+  ): Promise<{
+    data: Array<{
+      county: string;
+      data: Array<{ month: number; light_pollution_average: number }>;
+    }>;
+    time_range: { start: string; end: string };
+  }> {
     if (!params.start_time || !params.end_time) {
       throw new APIError(
         400,
@@ -172,26 +179,29 @@ class APIClient {
       throw new APIError(400, "start_time must be before end_time");
     }
 
-    return this.request("/charts/light-pollution/distribution", params, options);
+    return this.request(
+      "/charts/light-pollution/distribution",
+      params,
+      options
+    );
   }
 
   async getLightPollutionTimeline(
     params: { county: string; year: string },
     options?: { signal?: AbortSignal }
-  ): Promise<{ county: string; year: number; data: Array<{ month: number; light_pollution_average: number }>; total_months: number }> {
+  ): Promise<{
+    county: string;
+    year: number;
+    data: Array<{ month: number; light_pollution_average: number }>;
+    total_months: number;
+  }> {
     if (!params.county || !params.year) {
-      throw new APIError(
-        400,
-        "county and year are required parameters"
-      );
+      throw new APIError(400, "county and year are required parameters");
     }
 
     const yearNum = parseInt(params.year);
-    if (isNaN(yearNum) || yearNum < 1900 || yearNum > 2100) {
-      throw new APIError(
-        400,
-        "Invalid year format. Must be a valid year between 1900 and 2100"
-      );
+    if (isNaN(yearNum) || !isValidYear(yearNum)) {
+      throw new APIError(400, "Invalid year format. Must be a valid year");
     }
 
     return this.request("/charts/light-pollution/timeline", params, options);
