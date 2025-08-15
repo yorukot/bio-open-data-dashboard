@@ -21,8 +21,10 @@ import {
 } from "@/components/ui/select";
 import { getAvailableMonths, getAvailableYears } from "@/lib/config/time-range";
 import { useLightPollutionSourceRatio } from "@/lib/hooks/use-api";
-import React, { useState, useMemo } from "react";
-import { Pie, PieChart, Cell } from "recharts";
+import React, { useMemo, useState } from "react";
+import { Cell, Pie, PieChart } from "recharts";
+
+// TODO: Fix the horrible color
 
 const chartConfig = {
   light_pollution_average: {
@@ -33,7 +35,7 @@ const chartConfig = {
     color: "var(--chart-1)",
   },
   中區: {
-    label: "中區", 
+    label: "中區",
     color: "var(--chart-2)",
   },
   南區: {
@@ -52,7 +54,7 @@ const chartConfig = {
 
 const COLORS = {
   北區: "var(--chart-1)",
-  中區: "var(--chart-2)", 
+  中區: "var(--chart-2)",
   南區: "var(--chart-3)",
   東區: "var(--chart-4)",
   其他: "var(--chart-5)",
@@ -81,7 +83,7 @@ export function LightPollutionSourceRatioChart() {
     return data.data.map((item) => ({
       area: item.area,
       light_pollution_average: item.light_pollution_average,
-      percentage: total > 0 ? (item.light_pollution_average / total * 100) : 0,
+      percentage: total > 0 ? (item.light_pollution_average / total) * 100 : 0,
       fill: COLORS[item.area as keyof typeof COLORS] || COLORS.其他,
     }));
   }, [data]);
@@ -125,11 +127,13 @@ export function LightPollutionSourceRatioChart() {
               <SelectValue placeholder="選擇月份" />
             </SelectTrigger>
             <SelectContent>
-              {availableMonths.map((month: { value: string; label: string }) => (
-                <SelectItem key={month.value} value={month.value}>
-                  {month.label}
-                </SelectItem>
-              ))}
+              {availableMonths.map(
+                (month: { value: string; label: string }) => (
+                  <SelectItem key={month.value} value={month.value}>
+                    {month.label}
+                  </SelectItem>
+                )
+              )}
             </SelectContent>
           </Select>
         </div>
@@ -147,7 +151,14 @@ export function LightPollutionSourceRatioChart() {
                   <ChartTooltipContent
                     nameKey="area"
                     formatter={(value, name) => [
-                      `${Number(value).toFixed(2)} (${((value as number) / chartData.reduce((sum, item) => sum + item.light_pollution_average, 0) * 100).toFixed(1)}%)`,
+                      `${Number(value).toFixed(2)} (${(
+                        ((value as number) /
+                          chartData.reduce(
+                            (sum, item) => sum + item.light_pollution_average,
+                            0
+                          )) *
+                        100
+                      ).toFixed(1)}%)`,
                       "平均光害強度",
                     ]}
                   />
@@ -160,7 +171,9 @@ export function LightPollutionSourceRatioChart() {
                 cx="50%"
                 cy="50%"
                 outerRadius={120}
-                label={({ area, percentage }) => `${area} ${percentage.toFixed(1)}%`}
+                label={({ area, percentage }) =>
+                  `${area} ${percentage.toFixed(1)}%`
+                }
                 labelLine={false}
               >
                 {chartData.map((entry, index) => (
