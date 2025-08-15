@@ -39,5 +39,18 @@ export function useTBIAData(
   });
 }
 
+export function useLightPollutionDistribution(
+  params: { start_time: string; end_time: string },
+  options?: Omit<UseQueryOptions<{ data: Array<{ county: string; data: Array<{ month: number; light_pollution_average: number }> }>; time_range: { start: string; end: string } }, APIError>, 'queryKey' | 'queryFn'>
+) {
+  return useQuery({
+    queryKey: createQueryKey('light-pollution-distribution', params),
+    queryFn: () => apiClient.getLightPollutionDistribution(params),
+    enabled: !!(params.start_time && params.end_time),
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    ...options,
+  });
+}
+
 export type UseLightDataOptions = Omit<UseQueryOptions<LightDataResponse, APIError>, 'queryKey' | 'queryFn'>;
 export type UseTBIADataOptions = Omit<UseQueryOptions<TBIADataResponse, APIError>, 'queryKey' | 'queryFn'>;

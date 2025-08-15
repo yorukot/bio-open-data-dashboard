@@ -146,6 +146,34 @@ class APIClient {
 
     return this.request<TBIADataResponse>("/tbia-data", params, options);
   }
+
+  async getLightPollutionDistribution(
+    params: { start_time: string; end_time: string },
+    options?: { signal?: AbortSignal }
+  ): Promise<{ data: Array<{ county: string; data: Array<{ month: number; light_pollution_average: number }> }>; time_range: { start: string; end: string } }> {
+    if (!params.start_time || !params.end_time) {
+      throw new APIError(
+        400,
+        "start_time and end_time are required parameters"
+      );
+    }
+
+    const startDate = new Date(params.start_time);
+    const endDate = new Date(params.end_time);
+
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+      throw new APIError(
+        400,
+        "Invalid date format. Use ISO 8601 format (e.g., 2024-01-01T00:00:00Z)"
+      );
+    }
+
+    if (startDate >= endDate) {
+      throw new APIError(400, "start_time must be before end_time");
+    }
+
+    return this.request("/charts/light-pollution/distribution", params, options);
+  }
 }
 
 export const apiClient = new APIClient();
