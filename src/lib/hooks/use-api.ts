@@ -65,5 +65,18 @@ export function useLightPollutionTimeline(
   });
 }
 
+export function useLightPollutionSourceRatio(
+  params: { month: number; year?: number },
+  options?: Omit<UseQueryOptions<{ data: Array<{ area: string; light_pollution_average: number }>; month: number; year?: number; total_regions: number }, APIError>, 'queryKey' | 'queryFn'>
+) {
+  return useQuery({
+    queryKey: createQueryKey('light-pollution-source-ratio', params),
+    queryFn: () => apiClient.getLightPollutionSourceRatio(params),
+    enabled: !!params.month,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    ...options,
+  });
+}
+
 export type UseLightDataOptions = Omit<UseQueryOptions<LightDataResponse, APIError>, 'queryKey' | 'queryFn'>;
 export type UseTBIADataOptions = Omit<UseQueryOptions<TBIADataResponse, APIError>, 'queryKey' | 'queryFn'>;

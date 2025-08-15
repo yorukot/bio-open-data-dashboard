@@ -206,6 +206,34 @@ class APIClient {
 
     return this.request("/charts/light-pollution/timeline", params, options);
   }
+
+  async getLightPollutionSourceRatio(
+    params: { month: number; year?: number },
+    options?: { signal?: AbortSignal }
+  ): Promise<{
+    data: Array<{ area: string; light_pollution_average: number }>;
+    month: number;
+    year?: number;
+    total_regions: number;
+  }> {
+    if (!params.month) {
+      throw new APIError(400, "month parameter is required");
+    }
+
+    const monthNum = parseInt(String(params.month));
+    if (isNaN(monthNum) || monthNum < 1 || monthNum > 12) {
+      throw new APIError(400, "Invalid month format. Must be a number between 1 and 12");
+    }
+
+    if (params.year) {
+      const yearNum = parseInt(String(params.year));
+      if (isNaN(yearNum) || !isValidYear(yearNum)) {
+        throw new APIError(400, "Invalid year format. Must be a valid year");
+      }
+    }
+
+    return this.request("/charts/light-pollution/source-ratio", params, options);
+  }
 }
 
 export const apiClient = new APIClient();
