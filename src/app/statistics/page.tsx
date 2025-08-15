@@ -1,4 +1,5 @@
 import { LightPollutionDistributionChart } from "@/components/charts/light-pollution-distribution-chart";
+import { LightPollutionTimelineChart } from "@/components/charts/light-pollution-timeline-chart";
 import { ChartPlaceholder } from "@/components/chart-placeholder";
 
 export default function StatisticsPage() {
@@ -19,6 +20,11 @@ export default function StatisticsPage() {
               {/* Light Pollution Distribution Chart Section */}
               <section>
                 <LightPollutionDistributionChart />
+              </section>
+
+              {/* Light Pollution Timeline Chart Section */}
+              <section>
+                <LightPollutionTimelineChart />
               </section>
 
               {/* Data Distribution Section */}

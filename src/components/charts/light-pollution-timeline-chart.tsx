@@ -19,10 +19,34 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getAvailableMonths, getAvailableYears } from "@/lib/config/time-range";
-import { useLightPollutionDistribution } from "@/lib/hooks/use-api";
+import { getMonthNames, getAvailableYears } from "@/lib/config/time-range";
+import { useLightPollutionTimeline } from "@/lib/hooks/use-api";
 import React, { useState, useMemo } from "react";
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
+
+const COUNTIES = [
+  "臺北市",
+  "嘉義市",
+  "新竹市",
+  "彰化縣",
+  "桃園市",
+  "基隆市",
+  "臺中市",
+  "臺南市",
+  "高雄市",
+  "雲林縣",
+  "新北市",
+  "澎湖縣",
+  "新竹縣",
+  "屏東縣",
+  "苗栗縣",
+  "嘉義縣",
+  "南投縣",
+  "宜蘭縣",
+  "花蓮縣",
+  "臺東縣",
+  "金門縣",
+];
 
 const chartConfig = {
   light_pollution_average: {
@@ -31,63 +55,47 @@ const chartConfig = {
   },
 };
 
-export function LightPollutionDistributionChart() {
+export function LightPollutionTimelineChart() {
   const [selectedYear, setSelectedYear] = useState("2024");
-  const [selectedMonth, setSelectedMonth] = useState("all");
+  const [selectedCounty, setSelectedCounty] = useState("臺北市");
 
   const availableYears = useMemo(() => getAvailableYears(), []);
-  const availableMonths = useMemo(() => getAvailableMonths(), []);
+  const monthNames = useMemo(() => getMonthNames(), []);
 
-  const startTime =
-    selectedMonth === "all"
-      ? `${selectedYear}-01-01T00:00:00Z`
-      : `${selectedYear}-${selectedMonth.padStart(2, "0")}-01T00:00:00Z`;
-
-  const endTime =
-    selectedMonth === "all"
-      ? `${selectedYear}-12-31T23:59:59Z`
-      : (() => {
-          const year = parseInt(selectedYear);
-          const month = parseInt(selectedMonth);
-          const lastDay = new Date(year, month, 0).getDate();
-          return `${selectedYear}-${selectedMonth.padStart(2, "0")}-${lastDay
-            .toString()
-            .padStart(2, "0")}T23:59:59Z`;
-        })();
-
-  const { data, isLoading, error } = useLightPollutionDistribution({
-    start_time: startTime,
-    end_time: endTime,
+  const { data, isLoading, error } = useLightPollutionTimeline({
+    county: selectedCounty,
+    year: selectedYear,
   });
 
-  // Transform data for chart - each county is a bar
+  // Transform data for line chart
   const chartData = React.useMemo(() => {
     if (!data?.data) return [];
 
-    // Calculate average light pollution for each county
-    return data.data
-      .map((county) => {
-        const totalBrightness = county.data.reduce(
-          (sum, item) => sum + item.light_pollution_average,
-          0
-        );
-        const averageBrightness =
-          county.data.length > 0 ? totalBrightness / county.data.length : 0;
+    // Create an array with all 12 months, filling missing months with null
+    const monthsData = Array.from({ length: 12 }, (_, index) => {
+      const month = index + 1;
+      const dataPoint = data.data.find((item) => item.month === month);
 
-        return {
-          county: county.county,
-          light_pollution_average: Math.round(averageBrightness * 100) / 100,
-        };
-      })
-      .sort((a, b) => b.light_pollution_average - a.light_pollution_average); // Sort by brightness descending
-  }, [data]);
+      return {
+        month: monthNames[index],
+        monthNumber: month,
+        light_pollution_average: dataPoint
+          ? dataPoint.light_pollution_average
+          : null,
+      };
+    });
+
+    return monthsData;
+  }, [data, monthNames]);
 
   if (error) {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>台灣光害強度分佈圖</CardTitle>
-          <CardDescription>查看各縣市光害強度隨時間的變化趨勢</CardDescription>
+          <CardTitle>光害強度時間變化圖</CardTitle>
+          <CardDescription>
+            查看特定縣市各月份的光害強度變化趨勢
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="text-destructive">
@@ -101,8 +109,8 @@ export function LightPollutionDistributionChart() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>台灣光害強度分佈圖</CardTitle>
-        <CardDescription>各縣市每月的平均光害強度 </CardDescription>
+        <CardTitle>光害強度時間變化圖</CardTitle>
+        <CardDescription>特定縣市各月份的平均光害強度變化趨勢</CardDescription>
         <div className="flex gap-4">
           <Select value={selectedYear} onValueChange={setSelectedYear}>
             <SelectTrigger className="w-[120px]">
@@ -116,15 +124,14 @@ export function LightPollutionDistributionChart() {
               ))}
             </SelectContent>
           </Select>
-          <Select value={selectedMonth} onValueChange={setSelectedMonth}>
+          <Select value={selectedCounty} onValueChange={setSelectedCounty}>
             <SelectTrigger className="w-[120px]">
-              <SelectValue placeholder="選擇月份" />
+              <SelectValue placeholder="選擇縣市" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">全年</SelectItem>
-              {availableMonths.map((month: { value: string; label: string }) => (
-                <SelectItem key={month.value} value={month.value}>
-                  {month.label}
+              {COUNTIES.map((county) => (
+                <SelectItem key={county} value={county}>
+                  {county}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -138,25 +145,22 @@ export function LightPollutionDistributionChart() {
           </div>
         ) : (
           <ChartContainer config={chartConfig} className="h-[400px] w-full">
-            <BarChart
+            <LineChart
               accessibilityLayer
               data={chartData}
               margin={{
                 left: 12,
                 right: 12,
                 top: 12,
-                bottom: 60,
+                bottom: 12,
               }}
             >
               <CartesianGrid vertical={false} />
               <XAxis
-                dataKey="county"
+                dataKey="month"
                 tickLine={false}
                 axisLine={false}
                 tickMargin={8}
-                angle={-45}
-                textAnchor="end"
-                height={80}
               />
               <YAxis
                 tickLine={false}
@@ -169,19 +173,22 @@ export function LightPollutionDistributionChart() {
                 content={
                   <ChartTooltipContent
                     formatter={(value) => [
-                      `${Number(value).toFixed(2)}`,
-                      " 平均光害強度",
+                      value !== null ? `${Number(value).toFixed(2)}` : "無數據",
+                      "平均光害強度",
                     ]}
                     labelFormatter={(label) => label}
                   />
                 }
               />
-              <Bar
+              <Line
                 dataKey="light_pollution_average"
-                fill="var(--color-light_pollution_average)"
-                radius={4}
+                type="monotone"
+                stroke="var(--color-light_pollution_average)"
+                strokeWidth={2}
+                dot={false}
+                connectNulls={false}
               />
-            </BarChart>
+            </LineChart>
           </ChartContainer>
         )}
       </CardContent>

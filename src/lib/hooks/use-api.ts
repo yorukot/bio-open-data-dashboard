@@ -52,5 +52,18 @@ export function useLightPollutionDistribution(
   });
 }
 
+export function useLightPollutionTimeline(
+  params: { county: string; year: string },
+  options?: Omit<UseQueryOptions<{ county: string; year: number; data: Array<{ month: number; light_pollution_average: number }>; total_months: number }, APIError>, 'queryKey' | 'queryFn'>
+) {
+  return useQuery({
+    queryKey: createQueryKey('light-pollution-timeline', params),
+    queryFn: () => apiClient.getLightPollutionTimeline(params),
+    enabled: !!(params.county && params.year),
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    ...options,
+  });
+}
+
 export type UseLightDataOptions = Omit<UseQueryOptions<LightDataResponse, APIError>, 'queryKey' | 'queryFn'>;
 export type UseTBIADataOptions = Omit<UseQueryOptions<TBIADataResponse, APIError>, 'queryKey' | 'queryFn'>;

@@ -13,6 +13,7 @@ import { convertLightDataToGeoJSON } from "@/lib/utils/light-geojson";
 import { useAnimalMapLayers } from "@/hooks/use-animal-map-layers";
 import { useLightMapLayers } from "@/hooks/use-light-map-layers";
 import { LightPollutionLoading } from "@/components/light-pollution-loading";
+import { getDefaultDate, isValidDate, clampDate } from "@/lib/config/time-range";
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN!;
 
@@ -196,13 +197,20 @@ export default function MapPage() {
     ? urlDisplayMode
     : "bio";
 
-  // Parse date from URL or use current date
+  // Parse date from URL or use default date from global config
   const currentDate = useMemo(() => {
     if (urlMonth && /^\d{4}-\d{2}$/.test(urlMonth)) {
       const [year, month] = urlMonth.split("-").map(Number);
-      return new Date(year, month - 1, 1);
+      const proposedDate = new Date(year, month - 1, 1);
+      
+      // Validate and clamp the date to allowed range
+      if (isValidDate(proposedDate)) {
+        return proposedDate;
+      } else {
+        return clampDate(proposedDate);
+      }
     }
-    return new Date();
+    return getDefaultDate();
   }, [urlMonth]);
 
   // Helper function to update URL without adding to history

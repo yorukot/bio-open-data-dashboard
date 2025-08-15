@@ -174,6 +174,28 @@ class APIClient {
 
     return this.request("/charts/light-pollution/distribution", params, options);
   }
+
+  async getLightPollutionTimeline(
+    params: { county: string; year: string },
+    options?: { signal?: AbortSignal }
+  ): Promise<{ county: string; year: number; data: Array<{ month: number; light_pollution_average: number }>; total_months: number }> {
+    if (!params.county || !params.year) {
+      throw new APIError(
+        400,
+        "county and year are required parameters"
+      );
+    }
+
+    const yearNum = parseInt(params.year);
+    if (isNaN(yearNum) || yearNum < 1900 || yearNum > 2100) {
+      throw new APIError(
+        400,
+        "Invalid year format. Must be a valid year between 1900 and 2100"
+      );
+    }
+
+    return this.request("/charts/light-pollution/timeline", params, options);
+  }
 }
 
 export const apiClient = new APIClient();
