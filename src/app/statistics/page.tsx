@@ -5,6 +5,7 @@ import { AreaAnimalAmountChart } from "@/components/charts/area-animal-amount-ch
 import { AreaRatioBioChart } from "@/components/charts/area-ratio-bio-chart";
 import { SpeciesTimelineChart } from "@/components/charts/species-timeline-chart";
 import { CountyTotalAnimalsChart } from "@/components/charts/county-total-animals-chart";
+import { DatasetStatsChart } from "@/components/charts/dataset-stats-chart";
 
 export default function StatisticsPage() {
   return (
@@ -47,6 +48,7 @@ export default function StatisticsPage() {
                   <AreaRatioBioChart />
                   <SpeciesTimelineChart />
                   <CountyTotalAnimalsChart />
+                  <DatasetStatsChart />
                 </div>
               </section>
 

@@ -139,3 +139,17 @@ export interface SpeciesTimelineResponse {
   animal_type: string;
   year: number;
 }
+
+export interface DatasetStatsParams {
+  county?: string;
+}
+
+export interface DatasetStatsData {
+  dataset: string;
+  count: number;
+}
+
+export interface DatasetStatsResponse {
+  data: DatasetStatsData[];
+  county: string;
+}

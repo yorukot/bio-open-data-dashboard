@@ -11,6 +11,8 @@ import {
   AreaRatioResponse,
   SpeciesTimelineParams,
   SpeciesTimelineResponse,
+  DatasetStatsParams,
+  DatasetStatsResponse,
 } from "./types/api";
 
 class APIError extends Error {
@@ -315,6 +317,13 @@ class APIClient {
     }
 
     return this.request("/charts/night-animals/species-timeline", params, options);
+  }
+
+  async getDatasetStats(
+    params: DatasetStatsParams = {},
+    options?: { signal?: AbortSignal }
+  ): Promise<DatasetStatsResponse> {
+    return this.request("/charts/night-animals/dataset-stats", params, options);
   }
 }
 

@@ -10,7 +10,9 @@ import {
   AreaRatioParams,
   AreaRatioResponse,
   SpeciesTimelineParams,
-  SpeciesTimelineResponse
+  SpeciesTimelineResponse,
+  DatasetStatsParams,
+  DatasetStatsResponse
 } from '../types/api';
 
 export function createQueryKey(endpoint: string, params: Record<string, any> = {}) {
@@ -118,6 +120,18 @@ export function useSpeciesTimeline(
     queryKey: createQueryKey('species-timeline', params),
     queryFn: () => apiClient.getSpeciesTimeline(params),
     enabled: !!(params.animal_type && params.year),
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    ...options,
+  });
+}
+
+export function useDatasetStats(
+  params: DatasetStatsParams = {},
+  options?: Omit<UseQueryOptions<DatasetStatsResponse, APIError>, 'queryKey' | 'queryFn'>
+) {
+  return useQuery({
+    queryKey: createQueryKey('dataset-stats', params),
+    queryFn: () => apiClient.getDatasetStats(params),
     staleTime: 5 * 60 * 1000, // 5 minutes
     ...options,
   });
