@@ -8,7 +8,9 @@ import {
   AreaAnimalParams,
   AreaAnimalResponse,
   AreaRatioParams,
-  AreaRatioResponse
+  AreaRatioResponse,
+  SpeciesTimelineParams,
+  SpeciesTimelineResponse
 } from '../types/api';
 
 export function createQueryKey(endpoint: string, params: Record<string, any> = {}) {
@@ -103,6 +105,19 @@ export function useAreaRatio(
     queryKey: createQueryKey('area-ratio', params),
     queryFn: () => apiClient.getAreaRatio(params),
     enabled: !!(params.start_time && params.end_time),
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    ...options,
+  });
+}
+
+export function useSpeciesTimeline(
+  params: SpeciesTimelineParams,
+  options?: Omit<UseQueryOptions<SpeciesTimelineResponse, APIError>, 'queryKey' | 'queryFn'>
+) {
+  return useQuery({
+    queryKey: createQueryKey('species-timeline', params),
+    queryFn: () => apiClient.getSpeciesTimeline(params),
+    enabled: !!(params.animal_type && params.year),
     staleTime: 5 * 60 * 1000, // 5 minutes
     ...options,
   });

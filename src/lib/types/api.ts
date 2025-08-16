@@ -123,3 +123,19 @@ export interface AreaRatioResponse {
   data: AreaRatioData[];
   time_range: TimeRange;
 }
+
+export interface SpeciesTimelineParams {
+  animal_type: string;
+  year: number;
+}
+
+export interface SpeciesTimelineData {
+  month: number;
+  event_count: number;
+}
+
+export interface SpeciesTimelineResponse {
+  data: SpeciesTimelineData[];
+  animal_type: string;
+  year: number;
+}

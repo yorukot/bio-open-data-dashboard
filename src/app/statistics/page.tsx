@@ -3,6 +3,7 @@ import { LightPollutionTimelineChart } from "@/components/charts/light-pollution
 import { LightPollutionSourceRatioChart } from "@/components/charts/light-pollution-source-ratio-chart";
 import { AreaAnimalAmountChart } from "@/components/charts/area-animal-amount-chart";
 import { AreaRatioBioChart } from "@/components/charts/area-ratio-bio-chart";
+import { SpeciesTimelineChart } from "@/components/charts/species-timeline-chart";
 import { ChartPlaceholder } from "@/components/chart-placeholder";
 
 export default function StatisticsPage() {
@@ -43,6 +44,11 @@ export default function StatisticsPage() {
               {/* Area Ratio Bio Chart Section */}
               <section>
                 <AreaRatioBioChart />
+              </section>
+
+              {/* Species Timeline Chart Section */}
+              <section>
+                <SpeciesTimelineChart />
               </section>
 
               {/* Data Distribution Section */}

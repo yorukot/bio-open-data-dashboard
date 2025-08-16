@@ -9,6 +9,8 @@ import {
   AreaAnimalResponse,
   AreaRatioParams,
   AreaRatioResponse,
+  SpeciesTimelineParams,
+  SpeciesTimelineResponse,
 } from "./types/api";
 
 class APIError extends Error {
@@ -293,6 +295,26 @@ class APIClient {
     }
 
     return this.request("/charts/night-animals/area-ratio", params, options);
+  }
+
+  async getSpeciesTimeline(
+    params: SpeciesTimelineParams,
+    options?: { signal?: AbortSignal }
+  ): Promise<SpeciesTimelineResponse> {
+    if (!params.animal_type) {
+      throw new APIError(400, "animal_type parameter is required");
+    }
+
+    if (!params.year) {
+      throw new APIError(400, "year parameter is required");
+    }
+
+    const yearNum = Number(params.year);
+    if (isNaN(yearNum) || !isValidYear(yearNum)) {
+      throw new APIError(400, "Invalid year format. Must be a valid year");
+    }
+
+    return this.request("/charts/night-animals/species-timeline", params, options);
   }
 }
 
