@@ -5,6 +5,10 @@ import {
   LightDataResponse,
   TBIADataParams,
   TBIADataResponse,
+  AreaAnimalParams,
+  AreaAnimalResponse,
+  AreaRatioParams,
+  AreaRatioResponse,
 } from "./types/api";
 
 class APIError extends Error {
@@ -233,6 +237,62 @@ class APIClient {
     }
 
     return this.request("/charts/light-pollution/source-ratio", params, options);
+  }
+
+  async getAreaAnimalAmount(
+    params: AreaAnimalParams,
+    options?: { signal?: AbortSignal }
+  ): Promise<AreaAnimalResponse> {
+    if (!params.start_time || !params.end_time) {
+      throw new APIError(
+        400,
+        "start_time and end_time are required parameters"
+      );
+    }
+
+    const startDate = new Date(params.start_time);
+    const endDate = new Date(params.end_time);
+
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+      throw new APIError(
+        400,
+        "Invalid date format. Use ISO 8601 format (e.g., 2024-01-01T00:00:00Z)"
+      );
+    }
+
+    if (startDate >= endDate) {
+      throw new APIError(400, "start_time must be before end_time");
+    }
+
+    return this.request("/charts/night-animals/area-amount", params, options);
+  }
+
+  async getAreaRatio(
+    params: AreaRatioParams,
+    options?: { signal?: AbortSignal }
+  ): Promise<AreaRatioResponse> {
+    if (!params.start_time || !params.end_time) {
+      throw new APIError(
+        400,
+        "start_time and end_time are required parameters"
+      );
+    }
+
+    const startDate = new Date(params.start_time);
+    const endDate = new Date(params.end_time);
+
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+      throw new APIError(
+        400,
+        "Invalid date format. Use ISO 8601 format (e.g., 2024-01-01T00:00:00Z)"
+      );
+    }
+
+    if (startDate >= endDate) {
+      throw new APIError(400, "start_time must be before end_time");
+    }
+
+    return this.request("/charts/night-animals/area-ratio", params, options);
   }
 }
 

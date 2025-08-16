@@ -1,6 +1,8 @@
 import { LightPollutionDistributionChart } from "@/components/charts/light-pollution-distribution-chart";
 import { LightPollutionTimelineChart } from "@/components/charts/light-pollution-timeline-chart";
 import { LightPollutionSourceRatioChart } from "@/components/charts/light-pollution-source-ratio-chart";
+import { AreaAnimalAmountChart } from "@/components/charts/area-animal-amount-chart";
+import { AreaRatioBioChart } from "@/components/charts/area-ratio-bio-chart";
 import { ChartPlaceholder } from "@/components/chart-placeholder";
 
 export default function StatisticsPage() {
@@ -31,6 +33,16 @@ export default function StatisticsPage() {
               {/* Light Pollution Source Ratio Chart Section */}
               <section>
                 <LightPollutionSourceRatioChart />
+              </section>
+
+              {/* Area Animal Amount Chart Section */}
+              <section>
+                <AreaAnimalAmountChart />
+              </section>
+
+              {/* Area Ratio Bio Chart Section */}
+              <section>
+                <AreaRatioBioChart />
               </section>
 
               {/* Data Distribution Section */}

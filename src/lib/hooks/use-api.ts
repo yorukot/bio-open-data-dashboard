@@ -4,7 +4,11 @@ import {
   LightDataParams,
   TBIADataParams,
   LightDataResponse,
-  TBIADataResponse
+  TBIADataResponse,
+  AreaAnimalParams,
+  AreaAnimalResponse,
+  AreaRatioParams,
+  AreaRatioResponse
 } from '../types/api';
 
 export function createQueryKey(endpoint: string, params: Record<string, any> = {}) {
@@ -73,6 +77,32 @@ export function useLightPollutionSourceRatio(
     queryKey: createQueryKey('light-pollution-source-ratio', params),
     queryFn: () => apiClient.getLightPollutionSourceRatio(params),
     enabled: !!params.month,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    ...options,
+  });
+}
+
+export function useAreaAnimalAmount(
+  params: AreaAnimalParams,
+  options?: Omit<UseQueryOptions<AreaAnimalResponse, APIError>, 'queryKey' | 'queryFn'>
+) {
+  return useQuery({
+    queryKey: createQueryKey('area-animal-amount', params),
+    queryFn: () => apiClient.getAreaAnimalAmount(params),
+    enabled: !!(params.start_time && params.end_time),
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    ...options,
+  });
+}
+
+export function useAreaRatio(
+  params: AreaRatioParams,
+  options?: Omit<UseQueryOptions<AreaRatioResponse, APIError>, 'queryKey' | 'queryFn'>
+) {
+  return useQuery({
+    queryKey: createQueryKey('area-ratio', params),
+    queryFn: () => apiClient.getAreaRatio(params),
+    enabled: !!(params.start_time && params.end_time),
     staleTime: 5 * 60 * 1000, // 5 minutes
     ...options,
   });

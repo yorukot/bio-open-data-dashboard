@@ -85,3 +85,41 @@ export interface TBIADataResponse {
 export type BioGroup = '鳥類' | '兩棲類' | '哺乳類' | '爬蟲類' | '魚類' | '昆蟲' | '蜘蛛';
 
 export const BIO_GROUPS: BioGroup[] = ['鳥類', '兩棲類', '哺乳類', '爬蟲類', '魚類', '昆蟲', '蜘蛛'];
+
+export interface AreaAnimalParams {
+  start_time: string;
+  end_time: string;
+}
+
+export interface AreaAnimalData {
+  county: string;
+  animals: Array<{
+    animal_type: string;
+    total_amount: number;
+    event_count: number;
+  }>;
+}
+
+export interface AreaAnimalResponse {
+  data: AreaAnimalData[];
+  time_range: TimeRange;
+}
+
+export interface AreaRatioParams {
+  start_time: string;
+  end_time: string;
+}
+
+export interface AreaRatioData {
+  county: string;
+  animals: Array<{
+    animal_type: string;
+    total_amount: number;
+    event_count: number;
+  }>;
+}
+
+export interface AreaRatioResponse {
+  data: AreaRatioData[];
+  time_range: TimeRange;
+}

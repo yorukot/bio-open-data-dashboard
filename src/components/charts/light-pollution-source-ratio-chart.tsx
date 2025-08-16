@@ -28,7 +28,7 @@ import { Cell, Pie, PieChart } from "recharts";
 
 const chartConfig = {
   light_pollution_average: {
-    label: "光害強度",
+    label: "平均光害強度",
   },
   北區: {
     label: "北區",
@@ -159,7 +159,6 @@ export function LightPollutionSourceRatioChart() {
                           )) *
                         100
                       ).toFixed(1)}%)`,
-                      "平均光害強度",
                     ]}
                   />
                 }
