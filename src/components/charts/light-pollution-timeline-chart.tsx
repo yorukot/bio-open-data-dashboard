@@ -111,7 +111,7 @@ export function LightPollutionTimelineChart() {
       <CardHeader>
         <CardTitle>光害強度時間變化圖</CardTitle>
         <CardDescription>特定縣市各月份的平均光害強度變化趨勢</CardDescription>
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-2 sm:gap-4">
           <Select value={selectedYear} onValueChange={setSelectedYear}>
             <SelectTrigger className="w-[120px]">
               <SelectValue placeholder="選擇年份" />

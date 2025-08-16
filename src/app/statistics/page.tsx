@@ -12,7 +12,7 @@ import { SeasonAnimalRatioChart } from "@/components/charts/season-animal-ratio-
 export default function StatisticsPage() {
   return (
     <main className="flex-1 flex flex-col overflow-hidden">
-      <div className="flex-1 p-6 overflow-auto">
+      <div className="flex-1 p-4 sm:p-6 overflow-y-auto overflow-x-hidden">
         <div className="max-w-7xl mx-auto">
             <div className="mb-8">
               <h2 className="text-3xl font-bold tracking-tight mb-2">

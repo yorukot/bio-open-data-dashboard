@@ -109,7 +109,7 @@ export function LightPollutionSourceRatioChart() {
       <CardHeader>
         <CardTitle>光害來源比例</CardTitle>
         <CardDescription>各區域在選定月份的光害強度分佈比例</CardDescription>
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-2 sm:gap-4">
           <Select value={selectedYear} onValueChange={setSelectedYear}>
             <SelectTrigger className="w-[120px]">
               <SelectValue placeholder="選擇年份" />

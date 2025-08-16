@@ -130,7 +130,7 @@ export function DatasetStatsChart() {
         <CardDescription>
           各資料集在資料庫中的數量分佈和比例
         </CardDescription>
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-2 sm:gap-4">
           <Select value={selectedArea} onValueChange={setSelectedArea}>
             <SelectTrigger className="w-[120px]">
               <SelectValue placeholder="選擇區域" />

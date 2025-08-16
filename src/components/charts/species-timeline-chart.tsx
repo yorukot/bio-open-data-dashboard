@@ -78,7 +78,7 @@ export function SpeciesTimelineChart({ className }: SpeciesTimelineChartProps) {
         <CardDescription>
           選擇生物種類和年份查看月度事件數量變化趨勢
         </CardDescription>
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-2 sm:gap-4">
           <Select value={selectedYear.toString()} onValueChange={(value) => setSelectedYear(parseInt(value))}>
             <SelectTrigger className="w-[120px]">
               <SelectValue />

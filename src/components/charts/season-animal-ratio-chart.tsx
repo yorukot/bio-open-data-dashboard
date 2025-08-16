@@ -163,7 +163,7 @@ export function SeasonAnimalRatioChart() {
       <CardHeader>
         <CardTitle>季節占比生物比例</CardTitle>
         <CardDescription>選擇年份、季節與區域，查看七類生物比例</CardDescription>
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-2 sm:gap-4">
           <Select value={selectedYear} onValueChange={setSelectedYear}>
             <SelectTrigger className="w-[120px]">
               <SelectValue placeholder="選擇年份" />
@@ -266,4 +266,3 @@ export function SeasonAnimalRatioChart() {
     </Card>
   );
 }
-

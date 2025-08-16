@@ -170,7 +170,7 @@ export function AreaAnimalAmountChart() {
         <CardDescription>
           台灣北部、中部、南部、東部各地區的七類生物數量分佈
         </CardDescription>
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-2 sm:gap-4">
           <Select value={selectedYear} onValueChange={setSelectedYear}>
             <SelectTrigger className="w-[120px]">
               <SelectValue placeholder="選擇年份" />

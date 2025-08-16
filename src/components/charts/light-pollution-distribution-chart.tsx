@@ -103,7 +103,7 @@ export function LightPollutionDistributionChart() {
       <CardHeader>
         <CardTitle>台灣光害強度分佈圖</CardTitle>
         <CardDescription>各縣市每月的平均光害強度 </CardDescription>
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-2 sm:gap-4">
           <Select value={selectedYear} onValueChange={setSelectedYear}>
             <SelectTrigger className="w-[120px]">
               <SelectValue placeholder="選擇年份" />

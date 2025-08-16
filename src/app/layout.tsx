@@ -39,7 +39,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className="flex h-screen">
+            <div className="flex h-screen overflow-x-hidden">
               <SidebarProvider>
                 <AppSidebar />
                 <div className="flex-1 flex flex-col">

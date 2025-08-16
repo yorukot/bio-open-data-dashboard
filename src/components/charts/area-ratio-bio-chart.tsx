@@ -223,7 +223,7 @@ export function AreaRatioBioChart() {
         <CardDescription>
           選擇特定年份和區域查看七類生物分佈比例
         </CardDescription>
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-2 sm:gap-4">
           <Select value={selectedYear} onValueChange={setSelectedYear}>
             <SelectTrigger className="w-[120px]">
               <SelectValue placeholder="選擇年份" />
