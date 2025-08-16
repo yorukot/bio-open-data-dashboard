@@ -13,6 +13,8 @@ import {
   SpeciesTimelineResponse,
   DatasetStatsParams,
   DatasetStatsResponse,
+  SeasonAnimalAmountParams,
+  SeasonAnimalAmountResponse,
 } from "./types/api";
 
 class APIError extends Error {
@@ -324,6 +326,13 @@ class APIClient {
     options?: { signal?: AbortSignal }
   ): Promise<DatasetStatsResponse> {
     return this.request("/charts/night-animals/dataset-stats", params, options);
+  }
+
+  async getSeasonAnimalAmount(
+    params: SeasonAnimalAmountParams,
+    options?: { signal?: AbortSignal }
+  ): Promise<SeasonAnimalAmountResponse> {
+    return this.request("/charts/season/animal-amount", params, options);
   }
 }
 

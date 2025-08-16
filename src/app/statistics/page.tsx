@@ -6,6 +6,7 @@ import { AreaRatioBioChart } from "@/components/charts/area-ratio-bio-chart";
 import { SpeciesTimelineChart } from "@/components/charts/species-timeline-chart";
 import { CountyTotalAnimalsChart } from "@/components/charts/county-total-animals-chart";
 import { DatasetStatsChart } from "@/components/charts/dataset-stats-chart";
+import { SeasonAnimalAmountChart } from "@/components/charts/season-animal-amount-chart";
 
 export default function StatisticsPage() {
   return (
@@ -49,6 +50,18 @@ export default function StatisticsPage() {
                   <SpeciesTimelineChart />
                   <CountyTotalAnimalsChart />
                   <DatasetStatsChart />
+                </div>
+              </section>
+
+              {/* Seasonal Statistics Section */}
+              <section>
+                <div className="mb-6">
+                  <h3 className="text-2xl font-semibold tracking-tight mb-2">季節相關統計</h3>
+                  <p className="text-muted-foreground">不同季節、年份和地區的生物數量分佈分析</p>
+                </div>
+                
+                <div className="space-y-6">
+                  <SeasonAnimalAmountChart />
                 </div>
               </section>
 

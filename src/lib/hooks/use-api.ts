@@ -12,7 +12,9 @@ import {
   SpeciesTimelineParams,
   SpeciesTimelineResponse,
   DatasetStatsParams,
-  DatasetStatsResponse
+  DatasetStatsResponse,
+  SeasonAnimalAmountParams,
+  SeasonAnimalAmountResponse
 } from '../types/api';
 
 export function createQueryKey(endpoint: string, params: Record<string, any> = {}) {
@@ -132,6 +134,19 @@ export function useDatasetStats(
   return useQuery({
     queryKey: createQueryKey('dataset-stats', params),
     queryFn: () => apiClient.getDatasetStats(params),
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    ...options,
+  });
+}
+
+export function useSeasonAnimalAmount(
+  params: SeasonAnimalAmountParams,
+  options?: Omit<UseQueryOptions<SeasonAnimalAmountResponse, APIError>, 'queryKey' | 'queryFn'>
+) {
+  return useQuery({
+    queryKey: createQueryKey('season-animal-amount', params),
+    queryFn: () => apiClient.getSeasonAnimalAmount(params),
+    enabled: !!(params.year && params.season),
     staleTime: 5 * 60 * 1000, // 5 minutes
     ...options,
   });

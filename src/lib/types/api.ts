@@ -153,3 +153,25 @@ export interface DatasetStatsResponse {
   data: DatasetStatsData[];
   county: string;
 }
+
+export interface SeasonAnimalAmountParams {
+  year: string;
+  season: string;
+  county?: string;
+}
+
+export interface SeasonAnimalAmountData {
+  county: string;
+  animals: Array<{
+    animal_type: string;
+    total_amount: number;
+    event_count: number;
+  }>;
+}
+
+export interface SeasonAnimalAmountResponse {
+  data: SeasonAnimalAmountData[];
+  year: number;
+  season: number;
+  county: string;
+}
