@@ -7,6 +7,7 @@ import { SpeciesTimelineChart } from "@/components/charts/species-timeline-chart
 import { CountyTotalAnimalsChart } from "@/components/charts/county-total-animals-chart";
 import { DatasetStatsChart } from "@/components/charts/dataset-stats-chart";
 import { SeasonAnimalAmountChart } from "@/components/charts/season-animal-amount-chart";
+import { SeasonAnimalRatioChart } from "@/components/charts/season-animal-ratio-chart";
 
 export default function StatisticsPage() {
   return (
@@ -62,6 +63,7 @@ export default function StatisticsPage() {
                 
                 <div className="space-y-6">
                   <SeasonAnimalAmountChart />
+                  <SeasonAnimalRatioChart />
                 </div>
               </section>
 

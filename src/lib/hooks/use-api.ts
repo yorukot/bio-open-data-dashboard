@@ -14,7 +14,9 @@ import {
   DatasetStatsParams,
   DatasetStatsResponse,
   SeasonAnimalAmountParams,
-  SeasonAnimalAmountResponse
+  SeasonAnimalAmountResponse,
+  SeasonAnimalRatioParams,
+  SeasonAnimalRatioResponse
 } from '../types/api';
 
 export function createQueryKey(endpoint: string, params: Record<string, any> = {}) {
@@ -146,6 +148,19 @@ export function useSeasonAnimalAmount(
   return useQuery({
     queryKey: createQueryKey('season-animal-amount', params),
     queryFn: () => apiClient.getSeasonAnimalAmount(params),
+    enabled: !!(params.year && params.season),
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    ...options,
+  });
+}
+
+export function useSeasonAnimalRatio(
+  params: SeasonAnimalRatioParams,
+  options?: Omit<UseQueryOptions<SeasonAnimalRatioResponse, APIError>, 'queryKey' | 'queryFn'>
+) {
+  return useQuery({
+    queryKey: createQueryKey('season-animal-ratio', params),
+    queryFn: () => apiClient.getSeasonAnimalRatio(params),
     enabled: !!(params.year && params.season),
     staleTime: 5 * 60 * 1000, // 5 minutes
     ...options,

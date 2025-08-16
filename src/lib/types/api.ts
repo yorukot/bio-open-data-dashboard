@@ -175,3 +175,26 @@ export interface SeasonAnimalAmountResponse {
   season: number;
   county: string;
 }
+
+// Season Animal Ratio (same data shape as amount; used for pie chart ratios)
+export interface SeasonAnimalRatioParams {
+  year: string;
+  season: string;
+  county?: string;
+}
+
+export interface SeasonAnimalRatioData {
+  county: string;
+  animals: Array<{
+    animal_type: string;
+    total_amount: number;
+    event_count: number;
+  }>;
+}
+
+export interface SeasonAnimalRatioResponse {
+  data: SeasonAnimalRatioData[];
+  year: number;
+  season: number;
+  county: string;
+}

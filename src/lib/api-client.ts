@@ -15,6 +15,8 @@ import {
   DatasetStatsResponse,
   SeasonAnimalAmountParams,
   SeasonAnimalAmountResponse,
+  SeasonAnimalRatioParams,
+  SeasonAnimalRatioResponse,
 } from "./types/api";
 
 class APIError extends Error {
@@ -333,6 +335,13 @@ class APIClient {
     options?: { signal?: AbortSignal }
   ): Promise<SeasonAnimalAmountResponse> {
     return this.request("/charts/season/animal-amount", params, options);
+  }
+
+  async getSeasonAnimalRatio(
+    params: SeasonAnimalRatioParams,
+    options?: { signal?: AbortSignal }
+  ): Promise<SeasonAnimalRatioResponse> {
+    return this.request("/charts/season/animal-ratio", params, options);
   }
 }
 
