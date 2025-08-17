@@ -117,7 +117,7 @@ class APIClient {
       throw new APIError(400, "offset must be a non-negative integer");
     }
 
-    return this.request<LightDataResponse>("/light-data", params, options);
+    return this.request<LightDataResponse>("/light-data", params as unknown as Record<string, string | number | boolean>, options);
   }
 
   async getTBIAData(
@@ -157,7 +157,7 @@ class APIClient {
       throw new APIError(400, "offset must be a non-negative integer");
     }
 
-    return this.request<TBIADataResponse>("/tbia-data", params, options);
+    return this.request<TBIADataResponse>("/tbia-data", params as unknown as Record<string, string | number | boolean>, options);
   }
 
   async getLightPollutionDistribution(
@@ -193,7 +193,7 @@ class APIClient {
 
     return this.request(
       "/charts/light-pollution/distribution",
-      params,
+      params as unknown as Record<string, string | number | boolean>,
       options
     );
   }
@@ -216,7 +216,7 @@ class APIClient {
       throw new APIError(400, "Invalid year format. Must be a valid year");
     }
 
-    return this.request("/charts/light-pollution/timeline", params, options);
+    return this.request("/charts/light-pollution/timeline", params as unknown as Record<string, string | number | boolean>, options);
   }
 
   async getLightPollutionSourceRatio(
@@ -244,7 +244,7 @@ class APIClient {
       }
     }
 
-    return this.request("/charts/light-pollution/source-ratio", params, options);
+    return this.request("/charts/light-pollution/source-ratio", params as unknown as Record<string, string | number | boolean>, options);
   }
 
   async getAreaAnimalAmount(
@@ -272,7 +272,7 @@ class APIClient {
       throw new APIError(400, "start_time must be before end_time");
     }
 
-    return this.request("/charts/night-animals/area-amount", params, options);
+    return this.request("/charts/night-animals/area-amount", params as unknown as Record<string, string | number | boolean>, options);
   }
 
   async getAreaRatio(
@@ -300,7 +300,7 @@ class APIClient {
       throw new APIError(400, "start_time must be before end_time");
     }
 
-    return this.request("/charts/night-animals/area-ratio", params, options);
+    return this.request("/charts/night-animals/area-ratio", params as unknown as Record<string, string | number | boolean>, options);
   }
 
   async getSpeciesTimeline(
@@ -320,28 +320,28 @@ class APIClient {
       throw new APIError(400, "Invalid year format. Must be a valid year");
     }
 
-    return this.request("/charts/night-animals/species-timeline", params, options);
+    return this.request("/charts/night-animals/species-timeline", params as unknown as Record<string, string | number | boolean>, options);
   }
 
   async getDatasetStats(
     params: DatasetStatsParams = {},
     options?: { signal?: AbortSignal }
   ): Promise<DatasetStatsResponse> {
-    return this.request("/charts/night-animals/dataset-stats", params, options);
+    return this.request("/charts/night-animals/dataset-stats", params as unknown as Record<string, string | number | boolean>, options);
   }
 
   async getSeasonAnimalAmount(
     params: SeasonAnimalAmountParams,
     options?: { signal?: AbortSignal }
   ): Promise<SeasonAnimalAmountResponse> {
-    return this.request("/charts/season/animal-amount", params, options);
+    return this.request("/charts/season/animal-amount", params as unknown as Record<string, string | number | boolean>, options);
   }
 
   async getSeasonAnimalRatio(
     params: SeasonAnimalRatioParams,
     options?: { signal?: AbortSignal }
   ): Promise<SeasonAnimalRatioResponse> {
-    return this.request("/charts/season/animal-ratio", params, options);
+    return this.request("/charts/season/animal-ratio", params as unknown as Record<string, string | number | boolean>, options);
   }
 }
 

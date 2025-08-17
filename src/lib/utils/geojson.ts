@@ -52,7 +52,7 @@ export function convertTBIADataToGeoJSON(
       scientific_name: record.scientific_name || "Unknown",
       common_name_c: record.common_name_c || "未知",
       bio_group: record.bio_group || "未知",
-      event_date: record.event_date,
+      event_date: record.event_date || undefined,
       county: record.county || "未知",
       municipality: record.municipality || "",
     },

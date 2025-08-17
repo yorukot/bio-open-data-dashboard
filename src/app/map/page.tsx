@@ -265,3 +265,5 @@ export default function MapPage() {
     />
   );
 }
+
+export const dynamic = 'force-dynamic';
