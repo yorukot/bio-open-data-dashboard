@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useEffect, useMemo, useCallback } from "react";
+import React, { useRef, useEffect, useMemo, useCallback, Suspense } from "react";
 import Map, { MapRef } from "react-map-gl/mapbox";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -183,7 +183,7 @@ function MapContent({
   );
 }
 
-export default function MapPage() {
+function MapPageContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -263,6 +263,14 @@ export default function MapPage() {
       onDisplayModeChange={handleDisplayModeChange}
       onDateChange={handleDateChange}
     />
+  );
+}
+
+export default function MapPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <MapPageContent />
+    </Suspense>
   );
 }
 
