@@ -27,5 +27,6 @@ build
 *~
 bio-open-data-dashboard/
 insert_data/
+light_taiwan/
 Dockerfile
 docker-compose.yml

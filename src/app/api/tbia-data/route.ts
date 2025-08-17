@@ -84,7 +84,7 @@ export async function GET(request: NextRequest) {
       WHERE event_date >= $1 AND event_date <= $2
     `;
 
-    const queryParams: (string | number)[] = [startDate, endDate];
+    const queryParams: (string | number)[] = [startDate.toISOString(), endDate.toISOString()];
     let paramIndex = 3;
 
     // Add optional filters
@@ -136,7 +136,7 @@ export async function GET(request: NextRequest) {
       WHERE event_date >= $1 AND event_date <= $2
     `;
 
-    const countParams: (string | number)[] = [startDate, endDate];
+    const countParams: (string | number)[] = [startDate.toISOString(), endDate.toISOString()];
     let countParamIndex = 3;
 
     if (bioGroup) {
