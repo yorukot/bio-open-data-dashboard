@@ -35,7 +35,7 @@ class APIClient {
 
   private async request<T>(
     endpoint: string,
-    params?: Record<string, any>,
+    params?: Record<string, string | number | boolean>,
     options?: { signal?: AbortSignal }
   ): Promise<T> {
     // Handle both relative and absolute URLs

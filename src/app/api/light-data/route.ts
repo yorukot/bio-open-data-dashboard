@@ -67,7 +67,7 @@ export async function GET(request: NextRequest) {
       ORDER BY bucket ASC
     `;
 
-    const queryParams: any[] = [startDate, endDate];
+    const queryParams: (string | number)[] = [startDate, endDate];
 
     if (limitNum !== null) {
       queryText += ` LIMIT $3 OFFSET $4`;

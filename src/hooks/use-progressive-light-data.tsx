@@ -85,7 +85,7 @@ export function useProgressiveLightData({
     try {
       let offset = 0;
       let hasMore = true;
-      let allData: LightDataRecord[] = [];
+      const allData: LightDataRecord[] = [];
       let totalRecords: number | null = null;
       let currentPage = 0;
 

@@ -130,7 +130,7 @@ export function AreaAnimalAmountChart() {
         const regionData = regionMap.get(region)!;
 
         county.animals.forEach((animal) => {
-          if (BIO_GROUPS.includes(animal.animal_type as any)) {
+          if (BIO_GROUPS.includes(animal.animal_type as BioGroup)) {
             regionData[animal.animal_type] += animal.total_amount;
           }
         });

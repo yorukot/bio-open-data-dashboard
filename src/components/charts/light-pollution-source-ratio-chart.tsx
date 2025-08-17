@@ -150,7 +150,7 @@ export function LightPollutionSourceRatioChart() {
                 content={
                   <ChartTooltipContent
                     nameKey="area"
-                    formatter={(value, name) => [
+                    formatter={(value) => [
                       `${Number(value).toFixed(2)} (${(
                         ((value as number) /
                           chartData.reduce(

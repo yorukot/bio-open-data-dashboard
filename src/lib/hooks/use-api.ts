@@ -19,7 +19,7 @@ import {
   SeasonAnimalRatioResponse
 } from '../types/api';
 
-export function createQueryKey(endpoint: string, params: Record<string, any> = {}) {
+export function createQueryKey(endpoint: string, params: Record<string, string | number | boolean> = {}) {
   const filteredParams = Object.fromEntries(
     Object.entries(params).filter(([, value]) => value !== undefined && value !== null && value !== '')
   );

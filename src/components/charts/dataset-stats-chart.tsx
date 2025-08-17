@@ -218,7 +218,7 @@ export function DatasetStatsChart() {
                         return "";
                       }}
                       labelLine={false}
-                      onMouseEnter={(data, index) => {
+                      onMouseEnter={(data) => {
                         setHoveredDataset(data.dataset);
                       }}
                       onMouseLeave={() => {
