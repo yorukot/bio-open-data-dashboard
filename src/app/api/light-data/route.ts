@@ -85,7 +85,7 @@ export async function GET(request: NextRequest) {
 
     const [dataResult, countResult] = await Promise.all([
       query(queryText, queryParams),
-      query(countQuery, [startDate, endDate])
+      query(countQuery, [startDate.toISOString(), endDate.toISOString()])
     ]);
 
     const total = parseInt(countResult.rows[0].total);
