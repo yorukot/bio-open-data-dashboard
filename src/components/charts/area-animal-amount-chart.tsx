@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/select";
 import { getAvailableYears, getDefaultDate } from "@/lib/config/time-range";
 import { useAreaAnimalAmount } from "@/lib/hooks/use-api";
-import { BIO_GROUPS } from "@/lib/types/api";
+import { BIO_GROUPS, type BioGroup } from "@/lib/types/api";
 import React, { useMemo, useState } from "react";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
