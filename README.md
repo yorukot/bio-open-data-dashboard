@@ -34,3 +34,20 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Docker
+
+- Build and run with Compose: `docker compose up --build`
+- App runs on `http://localhost:3000`.
+- Provide environment values in a local `.env` file, e.g.:
+  - `NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=...`
+  - `DATABASE_URI=postgresql://USER:PASS@HOST:5432/DB?sslmode=disable`
+
+Notes:
+- Compose no longer provisions a database. Point `DATABASE_URI` to your external Postgres/TimescaleDB.
+- If your DB runs on the host machine, use `HOST=host.docker.internal` (not `localhost`) so the container can reach it.
+- The build does not copy `.env`. Compose passes `NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN` into the build via `build.args` using Compose's variable substitution from the project `.env` file.
+
+To build a standalone image without Compose:
+- `docker build --build-arg NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=$NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN -t bio-open-data-dashboard .`
+- `docker run -p 3000:3000 --env-file .env bio-open-data-dashboard`
