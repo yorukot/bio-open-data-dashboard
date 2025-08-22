@@ -1,7 +1,8 @@
 "use client";
 
-import { Map, BarChart3, Trophy, Download, ChevronLeft } from "lucide-react";
+import { BarChart3, ChevronLeft, Download, Map, Trophy } from "lucide-react";
 
+import { ThemeSwitcher } from "@/components/theme-switcher";
 import {
   Sidebar,
   SidebarContent,
@@ -14,7 +15,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { ThemeSwitcher } from "@/components/theme-switcher";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const items = [
@@ -27,11 +27,6 @@ const items = [
     title: "統計",
     url: "/statistics",
     icon: BarChart3,
-  },
-  {
-    title: "排行",
-    url: "/leaderboard",
-    icon: Trophy,
   },
   {
     title: "導出",
